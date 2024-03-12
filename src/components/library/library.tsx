@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import CategoryCard from "./CategoryCard";
 import ContentCard from "./ContentCard";
 import Filter from "./filter/Filter";
 import { useEffect } from "react";
