@@ -1,5 +1,5 @@
 // FilterTime.tsx
-import React, { FC, ChangeEvent, useEffect, useState } from "react";
+import { FC, ChangeEvent, useEffect, useState } from "react";
 
 interface FilterTimeProps {
   startYear: number;
