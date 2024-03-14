@@ -17,6 +17,7 @@ import { GameMain } from "./components/games/GameMain";
 import { UserProvider } from "./UserContext";
 import Register from "./components/login/Register";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Users from "./components/admin/Users/Users";
 
 function App() {
   return (
@@ -46,7 +47,17 @@ function App() {
             </Route>
 
             {/* Define a layout without Navbar for the "/admin" route */}
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route
+              path="/"
+              element={
+                <div className="flex flex-row">
+                  <AdminDashboard />
+                  <Outlet />
+                </div>
+              }
+            >
+              <Route path="/admin/users" element={<Users />} />
+            </Route>
           </Routes>
         </div>
       </Router>
