@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "../../../AxiosInterceptors";
 import CreateUserForm from "./CreateUserForm";
+import PopupDialog from "../../PopupDialog";
+import UserForm from "./UserForm";
 
 interface User {
   id: number;
@@ -9,10 +11,44 @@ interface User {
   role: string;
   first_name: string;
   last_name: string;
+  password: string;
 }
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [templateUser, setTemplateUser] = useState<User>({
+    id: 0,
+    username: "",
+    email: "",
+    role: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+  });
+
+  const openEditDialog = (user: User) => {
+    setEditDialogOpen(true);
+    setTemplateUser(user);
+  }
+  const closeEditDialog = () => {
+    setEditDialogOpen(false);
+    reloadUsers();
+  }
+
+
+  const handleUserDialogSaved = () => {
+    console.log(templateUser);
+    // axios
+    //   .put(`/auth/users/${updatedUser.id}/`, updatedUser)
+    //   .then((response) => {
+    //     closeEditDialog();
+    //     reloadUsers();
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error updating user:", error);
+    //   });
+  };
 
   useEffect(() => {
     reloadUsers();
@@ -52,7 +88,7 @@ const Users = () => {
                 <td className="px-4 py-2">{user.username}</td>
                 <td className="px-4 py-2">{user.email}</td>
                 <td className="px-4 py-2 capitalize">{user.role}</td>
-                <td className="px-4 py-2">
+                <td className="pl-4 px-2 py-2">
                   <button
                     onClick={() => deleteUser(user.id)}
                     className="flex items-center justify-center bg-red-400 hover:bg-red-600 active:bg-red-700 text-white font-bold py-1 px-4 rounded-md transition-colors"
@@ -60,13 +96,25 @@ const Users = () => {
                     <span>Delete</span>
                   </button>
                 </td>
+                <td className=" py-2">
+                  <button
+                  onClick={() => openEditDialog(user)}
+                    className="flex items-center justify-center bg-blue-400 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-1 px-4 rounded-md transition-colors"
+                  >
+                    <span>Edit</span>
+                  </button>
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      <PopupDialog isOpen={editDialogOpen} onClose={closeEditDialog} onSave={handleUserDialogSaved}>
+        <div><UserForm templateUser={templateUser} onClose={closeEditDialog}/></div>
+      </PopupDialog>
     </div>
   );
 };
+
 
 export default Users;

@@ -30,7 +30,7 @@ function App() {
             <Route
               path="/"
               element={
-                <div>
+                <div className="flex flex-col h-screen">
                   <Navbar />
                   <Outlet />
                   <Footer />

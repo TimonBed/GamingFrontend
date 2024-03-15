@@ -62,8 +62,8 @@ export default function Login() {
   // rest of your component code
 
   return (
-    <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-slate-800 overflow-clip">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm h-full mt-16">
+    <div className="flex flex-1 flex-col px-6 py-12 lg:px-8 bg-slate-800 justify-center">
+      <div className="mt-16">
         <img className="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-brandtext">
           Sign in to your account
