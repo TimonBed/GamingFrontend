@@ -1,11 +1,13 @@
-import { HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { UsersIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import Profile from "../navbar/Profile";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { useState } from "react";
+
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, count: "5", current: false },
   { name: "Users", href: "/admin/users", icon: UsersIcon, current: true },
+  { name: "References", href: "/admin/references", icon: BookOpenIcon, current: false },
 ];
 const teams = [
   { id: 1, name: "Home", href: "/", initial: "H", current: false },
@@ -17,6 +19,16 @@ function classNames(...classes: string[]) {
 }
 
 export default function AdminDashboard() {
+  const [navItems, setNavItems] = useState(navigation);
+  const handleCurrent = (name: string) => {
+    console.log(name);
+    const updatedNavItems = navItems.map(item =>
+      item.name === name ? { ...item, current: true } : { ...item, current: false }
+    );
+    setNavItems(updatedNavItems);
+    console.log(updatedNavItems);
+  };
+
   return (
     <div className=" min-w-72 flex flex-col h-screen gap-y-5  overflow-y-auto bg-gray-900 px-6">
       <div className="flex h-16 shrink-0 items-center ">
@@ -28,10 +40,11 @@ export default function AdminDashboard() {
         <ul role="list" className="flex fl flex-1 flex-col gap-y-7">
           <li className="flex flex-grow">
             <ul role="list" className=" space-y-1 w-full">
-              {navigation.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.href}
+                    onClick={() => handleCurrent(item.name)}
                     className={classNames(
                       item.current
                         ? "bg-gray-800 text-white"
@@ -44,14 +57,14 @@ export default function AdminDashboard() {
                       aria-hidden="true"
                     />
                     {item.name}
-                    {item.count ? (
+                    {/* {item.count ? (
                       <span
                         className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-gray-900 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-gray-700"
                         aria-hidden="true"
                       >
                         {item.count}
                       </span>
-                    ) : null}
+                    ) : null} */}
                   </Link>
                 </li>
               ))}

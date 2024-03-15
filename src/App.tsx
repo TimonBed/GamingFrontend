@@ -18,6 +18,7 @@ import { UserProvider } from "./UserContext";
 import Register from "./components/login/Register";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Users from "./components/admin/Users/Users";
+import ReferencesPage from "./components/admin/References/ReferencesPage";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               }
             >
               <Route path="/admin/users" element={<Users />} />
+              <Route path="/admin/references" element={<ReferencesPage />} />
             </Route>
           </Routes>
         </div>
