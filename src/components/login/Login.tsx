@@ -34,7 +34,7 @@ export default function Login() {
       .post(`${import.meta.env.VITE_BACKEND_URL}/auth/token/`, {
         username: username,
         password: password,
-      })
+      }, {timeout: 5000})
       .then(async (response) => {
         if (response.status === 200) {
           console.log(response.data);
