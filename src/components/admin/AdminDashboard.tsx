@@ -1,34 +1,11 @@
-import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-} from "@heroicons/react/24/outline";
+import { HomeIcon, UsersIcon } from "@heroicons/react/24/outline";
 import Profile from "../navbar/Profile";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, count: "5", current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  {
-    name: "Projects",
-    href: "#",
-    icon: FolderIcon,
-    count: "12",
-    current: false,
-  },
-  {
-    name: "Calendar",
-    href: "#",
-    icon: CalendarIcon,
-    count: "20+",
-    current: false,
-  },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  { name: "Dashboard", href: "#", icon: HomeIcon, count: "5", current: false },
+  { name: "Users", href: "/admin/users", icon: UsersIcon, current: true },
 ];
 const teams = [
   { id: 1, name: "Home", href: "/", initial: "H", current: false },
@@ -41,7 +18,7 @@ function classNames(...classes: string[]) {
 
 export default function AdminDashboard() {
   return (
-    <div className="w-80 flex flex-col h-screen gap-y-5  overflow-y-auto bg-gray-900 px-6">
+    <div className=" min-w-72 flex flex-col h-screen gap-y-5  overflow-y-auto bg-gray-900 px-6">
       <div className="flex h-16 shrink-0 items-center ">
         <Link to={"/"}>
           <img className="h-8 w-auto" src={logo} alt="Your Company" />
@@ -53,8 +30,8 @@ export default function AdminDashboard() {
             <ul role="list" className=" space-y-1 w-full">
               {navigation.map((item) => (
                 <li key={item.name}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className={classNames(
                       item.current
                         ? "bg-gray-800 text-white"
@@ -75,7 +52,7 @@ export default function AdminDashboard() {
                         {item.count}
                       </span>
                     ) : null}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

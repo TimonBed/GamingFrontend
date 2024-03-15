@@ -5,7 +5,6 @@ interface FilterTimeProps {
   startYear: number;
   //   onRangeChange: (start: number, end: number) => void;
 }
-
 export const FilterTime: FC<FilterTimeProps> = ({ startYear }) => {
   const currentYear = new Date().getFullYear();
   const [selectedStartYear, setSelectedStartYear] = useState(startYear);

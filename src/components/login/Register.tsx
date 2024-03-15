@@ -30,10 +30,11 @@ export default function Register() {
     setLoading(true);
     // verify user
     await axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/register/`, {
+      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/users/`, {
         username: username,
         email: email,
         password: password,
+        role: "user",
       })
       .then(async () => {
         navigate("/login"); // Redirect to the home page
