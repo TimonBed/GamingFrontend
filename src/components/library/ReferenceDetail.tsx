@@ -7,6 +7,9 @@ import EmbedYouTube from "../EmbedYouTube";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
 import axios from "../../AxiosInterceptors";
+import PopupDialog from "../PopupDialog";
+import NewReferenceItemDialog from "./NewReferenceItemDialog";
+import { useUser } from "../../UserContext";
 
 interface Reference {
   id: number;
@@ -51,6 +54,8 @@ const ReferenceDetail = () => {
     window.location.hash = "";
   };
 
+  const { user } = useUser();
+
   useEffect(() => {
     if (window.location.hash) {
       setIsMaximized(true);
@@ -79,6 +84,8 @@ const ReferenceDetail = () => {
       day: "numeric",
     });
   };
+
+  const [PopupDialogOpen, setPopupDialogOpen] = useState(false);
 
   const [isMaximized, setIsMaximized] = useState(false);
   return (
@@ -232,7 +239,6 @@ const ReferenceDetail = () => {
                   Released: {formatReleaseDate(game?.release_date ?? "Error")}
                 </p>
               </div>
-              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
               {/* tags */}
               <div className="flex flex-wrap gap-2">
                 {game?.game_category.map((tag) => (
@@ -244,11 +250,34 @@ const ReferenceDetail = () => {
                   </Link>
                 ))}
               </div>
+              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+              <div>
+                {user?.role === "admin" ? (
+                  <button
+                    onClick={() => setPopupDialogOpen(true)}
+                    className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                  >
+                    Add Media
+                  </button>
+                ) : (
+                  <div></div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
       <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+      {/* add popupdialog */}
+      <PopupDialog
+        isOpen={PopupDialogOpen}
+        onClose={() => setPopupDialogOpen(false)}
+        onSave={() => {
+          console.log("save");
+        }}
+      >
+        <NewReferenceItemDialog></NewReferenceItemDialog>
+      </PopupDialog>
     </div>
   );
 };

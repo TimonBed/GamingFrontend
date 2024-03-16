@@ -30,12 +30,9 @@ instance.interceptors.response.use(
         const refreshToken = localStorage.getItem("refresh_token");
 
         if (refreshToken) {
-          const response = await axios.post(
-            apiUri + "/image-generation/permission/refresh_token/",
-            {
-              refresh_token: refreshToken,
-            }
-          );
+          const response = await axios.post(apiUri + "/auth/token/refresh/", {
+            refresh_token: refreshToken,
+          });
 
           const newAccessToken = response.data.access_token;
 

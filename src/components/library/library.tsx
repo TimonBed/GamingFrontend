@@ -30,7 +30,7 @@ const Library = () => {
   }, []);
 
   return (
-    <div className="bg-gray-900 text-brandtext">
+    <div className="bg-gray-900 text-brandtext h-full">
       <div className="max-w-[2100px] mx-auto items-center">
         <div className="pt-32 mx-8 max-w-[1500px] sm:mx-auto items-center flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight">
@@ -61,10 +61,12 @@ const Library = () => {
                   />
                 ))}
               </div>
-              <hr className="mt-8 border-slate-50/60 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
-              <div className="flex justify-center w-full m-8">
-                <Pagination />
-              </div>
+              {References.length > 40 ? (
+                <div className="flex justify-center w-full m-8">
+                  <hr className="mt-8 border-slate-50/60 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+                  <Pagination />
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
