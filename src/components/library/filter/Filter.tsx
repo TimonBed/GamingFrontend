@@ -8,7 +8,11 @@ const Filter = () => {
         <p className="m-2 text-md font-bold text-gray-300">Filter Game</p>
         <div className=" space-y-1">
           {/* input search for games */}
-          <FilterInput name="Search Games" apiEndpoint="games" key="games" />
+          <FilterInput
+            name="Search Games"
+            apiEndpoint="references/games/"
+            key="games"
+          />
         </div>
       </div>
       <div>
@@ -17,7 +21,7 @@ const Filter = () => {
           {/* input search for games */}
           <FilterInput
             name="Search Genres"
-            apiEndpoint="game-categories"
+            apiEndpoint="references/game-categories/"
             key="game-categories"
           />
         </div>
@@ -28,7 +32,7 @@ const Filter = () => {
           {/* input search for games */}
           <FilterInput
             name="Search Developer"
-            apiEndpoint="game-categories"
+            apiEndpoint="references/game-categories/"
             key="game-categories"
           />
         </div>
@@ -38,7 +42,7 @@ const Filter = () => {
         <p className="m-2 text-md font-bold text-gray-300">Filter Time</p>
         <div className=" space-y-1">
           {/* input search for games */}
-          <FilterTime startYear={2016} key="game-categories" />
+          <FilterTime startYear={2016} key="game-categorie" />
         </div>
       </div>
     </div>

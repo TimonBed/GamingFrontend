@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../AxiosInterceptors";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface Games {
@@ -36,9 +36,7 @@ export const FilterInput = ({ apiEndpoint, name }: FilterInputProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/" + apiEndpoint
-        );
+        const response = await axios.get(apiEndpoint);
         setItems(response.data);
         setFiltered(response.data);
         console.log(response.data);
