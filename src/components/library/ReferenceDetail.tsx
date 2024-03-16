@@ -82,7 +82,7 @@ const ReferenceDetail = () => {
 
   const [isMaximized, setIsMaximized] = useState(false);
   return (
-    <div className="pt-32 text-brandtext bg-slate-700">
+    <div className="pt-32 text-brandtext bg-slate-700 h-full">
       {/* maximized window popup */}
       {isMaximized ? (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-70">
