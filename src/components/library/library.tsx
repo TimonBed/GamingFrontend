@@ -1,53 +1,15 @@
 import { useLocation } from "react-router-dom";
 import ContentCard from "./ContentCard";
 import Filter from "./filter/Filter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
+import axios from "../../AxiosInterceptors";
 
-const content = [
-  {
-    title: "Inventory",
-    description: "Inventory System",
-    link: "/library/1",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-  {
-    title: "Movement",
-    description: "Player Movement",
-    link: "/library/2",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-  {
-    title: "UI/UX",
-    description: "User Interface and User Experience Design",
-    link: "/library/3",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-  {
-    title: "Interaction",
-    description: "World Interaction",
-    link: "/library/4",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-  {
-    title: "Physics",
-    description: "Game Physics",
-    link: "/library/5",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-  {
-    title: "Physics",
-    description: "Game Physics",
-    link: "/library/6",
-    developer: "Error",
-    releaseDate: "Error",
-  },
-];
+interface Reference {
+  id: number;
+  name: string;
+  game: string;
+}
 
 const Library = () => {
   const location = useLocation();
@@ -59,6 +21,13 @@ const Library = () => {
       }
     }
   }, [location.hash]);
+
+  const [References, setReferences] = useState<Reference[]>([]);
+  useEffect(() => {
+    axios.get("/references/references/").then((res) => {
+      setReferences(res.data);
+    });
+  }, []);
 
   return (
     <div className="bg-gray-900 text-brandtext">
@@ -74,21 +43,21 @@ const Library = () => {
         </div>
 
         <section id="library">
-          <div className="flex flex-row mx-8 mt-16 ">
+          <div className="flex flex-row mx-8 mt-16 space-x-8">
             <div className="p-8 rounded-md bg-slate-800/50 h-min">
               <h3>Filter</h3>
               <Filter />
             </div>
             <div>
               <div className="flex flex-wrap h-min gap-6 justify-center items-top">
-                {content.map((content) => (
+                {References.map((reference) => (
                   <ContentCard
-                    key={content.title}
-                    title={content.title}
-                    description={content.description}
-                    link={content.link}
-                    developer={content.developer}
-                    releaseDate={content.releaseDate}
+                    key={reference.id}
+                    title={reference.name}
+                    description="{reference.description}"
+                    link={reference.id.toString()}
+                    developer="{reference.developer}"
+                    releaseDate="{reference.releaseDate}"
                   />
                 ))}
               </div>

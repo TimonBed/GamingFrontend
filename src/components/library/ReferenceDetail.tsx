@@ -2,10 +2,24 @@ import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EmbedYouTube from "../EmbedYouTube";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
+import axios from "../../AxiosInterceptors";
+
+interface Reference {
+  id: number;
+  name: string;
+  game: string;
+}
+
+interface Game {
+  id: number;
+  game_category: string[];
+  name: string;
+  release_date: string;
+}
 
 const references = [
   {
@@ -30,7 +44,6 @@ const references = [
   },
 ];
 
-const tags = ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6"];
 const ReferenceDetail = () => {
   const onImageClose = () => {
     setIsMaximized(false);
@@ -43,6 +56,30 @@ const ReferenceDetail = () => {
       setIsMaximized(true);
     }
   }, []);
+
+  const { id } = useParams();
+  const [reference, setReference] = useState<Reference>();
+  const [game, setGame] = useState<Game>();
+  // get reference with id
+  useEffect(() => {
+    axios.get(`/references/references/${id}/`).then((res) => {
+      setReference(res.data);
+      console.log(res.data);
+      axios.get(`/references/games/${res.data.game}/`).then((res) => {
+        setGame(res.data);
+      });
+    });
+  }, [id]);
+
+  const formatReleaseDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   const [isMaximized, setIsMaximized] = useState(false);
   return (
     <div className="pt-32 text-brandtext bg-slate-700">
@@ -133,7 +170,7 @@ const ReferenceDetail = () => {
                       />
                     </svg>
                     <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                      Astroneer
+                      {reference?.name}
                     </span>
                   </div>
                 </li>
@@ -185,18 +222,20 @@ const ReferenceDetail = () => {
           <div className="w-1/4">
             <div className="flex flex-col space-y-4">
               <div>
-                <h1>ASTRONEER</h1>
+                <h1 className="uppercase">{reference?.name ?? "Error"}</h1>
+                <h2>{reference?.game ?? "Error"}</h2>
                 <p>Reference Description</p>
               </div>
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
               <div>
-                <p>Release Date</p>
-                <p>Game</p>
+                <p>
+                  Released: {formatReleaseDate(game?.release_date ?? "Error")}
+                </p>
               </div>
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
               {/* tags */}
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
+                {game?.game_category.map((tag) => (
                   <Link
                     to="/library"
                     className="rounded-md border border-slate-50/10 min-w-16 text-center p-1 my-auto text-sm bg-brandprimary/40 hover:bg-brandprimaryhover active:bg-brandprimaryactive"
