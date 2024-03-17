@@ -25,7 +25,9 @@ const Library = () => {
   const [References, setReferences] = useState<Reference[]>([]);
   useEffect(() => {
     axios.get("/references/references/").then((res) => {
-      setReferences(res.data);
+      if (res && res.data) {
+        setReferences(res.data);
+      }
     });
   }, []);
 

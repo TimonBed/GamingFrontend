@@ -1,4 +1,3 @@
-// UserContext.tsx
 import {
   createContext,
   useContext,
@@ -6,7 +5,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import axios from "axios";
+import axios from "./AxiosInterceptors";
 
 interface User {
   username: string;
@@ -51,9 +50,18 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         })
         .then((response) => {
           updateUser(response.data);
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            // Unauthorized (e.g., token expired)
+            console.log("Token expired");
+            logoutUser(); // Logout the user if token is expired
+            // Redirect to login page
+            window.location.href = "/login";
+          }
         });
     }
-  });
+  }, [user]); // Make sure to include user in the dependency array to prevent infinite loops
 
   return (
     <UserContext.Provider value={{ user, updateUser, logoutUser }}>

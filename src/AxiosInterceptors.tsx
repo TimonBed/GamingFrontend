@@ -44,11 +44,9 @@ instance.interceptors.response.use(
           return axios(originalRequest);
         }
       } catch (refreshError) {
-        console.error("Failed to refresh token:", refreshError);
-        // Handle refresh error, e.g., redirect to login page
+        return Promise.reject(refreshError);
       }
     }
-    return Promise.reject(error);
   }
 );
 
