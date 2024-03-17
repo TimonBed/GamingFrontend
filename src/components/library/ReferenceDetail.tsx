@@ -55,7 +55,6 @@ const ReferenceDetail = () => {
   };
 
   const { user } = useUser();
-
   useEffect(() => {
     if (window.location.hash) {
       setIsMaximized(true);
@@ -253,12 +252,20 @@ const ReferenceDetail = () => {
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
               <div>
                 {user?.role === "admin" ? (
-                  <button
-                    onClick={() => setPopupDialogOpen(true)}
-                    className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
-                  >
-                    Add Media
-                  </button>
+                  <div className="space-x-4">
+                    <button
+                      onClick={() => setPopupDialogOpen(true)}
+                      className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                    >
+                      Add Media
+                    </button>
+                    <Link
+                      to={`/admin/references/${id}`}
+                      className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                    >
+                      Edit Reference
+                    </Link>
+                  </div>
                 ) : (
                   <div></div>
                 )}
