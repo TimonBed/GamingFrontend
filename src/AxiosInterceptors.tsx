@@ -31,10 +31,11 @@ instance.interceptors.response.use(
 
         if (refreshToken) {
           const response = await axios.post(apiUri + "/auth/token/refresh/", {
-            refresh_token: refreshToken,
+            refresh: refreshToken,
           });
 
-          const newAccessToken = response.data.access_token;
+          const newAccessToken = response.data.access;
+          localStorage.setItem("access_token", newAccessToken);
 
           // Update the original request with the new access token
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
