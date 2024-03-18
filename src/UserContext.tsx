@@ -13,6 +13,7 @@ interface User {
   role: string;
   first_name: string;
   last_name: string;
+  gravatar: string;
 }
 
 interface UserContextProps {
@@ -29,6 +30,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
 
   const updateUser = (newUser: User | null) => {
+    console.log("Updating user:", newUser);
     setUser(newUser);
   };
 
