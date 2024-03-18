@@ -3,7 +3,6 @@ import {
   ArrowLongRightIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useParams } from "react-router-dom";
-import EmbedYouTube from "../EmbedYouTube";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
 import axios from "../../AxiosInterceptors";
@@ -32,28 +31,6 @@ interface Game {
   release_date: string;
 }
 
-const references = [
-  {
-    id: 1,
-    link: "https://www.youtube.com/embed/JHiAWTH6ft0?si=sxymcRX-aHsDHJbh",
-    isVideo: true,
-  },
-  {
-    id: 2,
-    link: "https://www.youtube.com/embed/JHiAWTH6ft0?si=sxymcRX-aHsDHJbh",
-    isVideo: true,
-  },
-  {
-    id: 3,
-    link: "https://www.youtube.com/embed/JHiAWTH6ft0?si=sxymcRX-aHsDHJbh",
-    isVideo: true,
-  },
-  {
-    id: 4,
-    link: "https://gaming-cdn.com/images/products/3298/screenshot/astroneer-pc-spiel-steam-wallpaper-5.jpg?v=1649408080",
-    isVideo: false,
-  },
-];
 
 const ReferenceDetail = () => {
   const onImageClose = () => {

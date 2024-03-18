@@ -78,7 +78,7 @@ const MaxImage = ({ onClose, content }: imageProps) => {
               // download image
               () => {
                 const downloadLink = document.createElement("a");
-                downloadLink.href = src;
+                // downloadLink.href = src;
                 downloadLink.download = "test.jpg";
                 downloadLink.target = "_blank";
                 downloadLink.click();
