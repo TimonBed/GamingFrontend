@@ -11,10 +11,18 @@ import PopupDialog from "../PopupDialog";
 import NewReferenceItemDialog from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
 
+interface Image {
+  id: number;
+  title: string;
+  image_file: string;
+  reference: number;
+}
+
 interface Reference {
   id: number;
   name: string;
   game: string;
+  image_contents: Image[];
 }
 
 interface Game {
@@ -85,22 +93,29 @@ const ReferenceDetail = () => {
   };
 
   const [PopupDialogOpen, setPopupDialogOpen] = useState(false);
-
   const [isMaximized, setIsMaximized] = useState(false);
+  const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
+
+  const handleMaximize = (reference: Image) => {
+    setIsMaximized(true);
+    setMaximizedContent(reference);
+    console.log("maximize", reference);
+  };
+
   return (
-    <div className="pt-32 text-brandtext bg-slate-700 h-full">
+    <div className="pt-32 text-brandtext bg-slate-700 h-full ">
       {/* maximized window popup */}
       {isMaximized ? (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-70">
           <MaxImage
+            content={MaximizedContent}
             onClose={onImageClose}
-            src="https://gaming-cdn.com/images/products/3298/screenshot/astroneer-pc-spiel-steam-wallpaper-5.jpg?v=1649408080"
           ></MaxImage>
         </div>
       ) : (
         <div></div>
       )}
-      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* nav section */}
       <section className=" max-w-[1500px] px-8 mx-auto">
         <div className="flex felx-row justify-between">
@@ -114,12 +129,12 @@ const ReferenceDetail = () => {
               <p>Back</p>
             </Link>
             {/* breadcrumb */}
-            <nav className="flex" aria-label="Breadcrumb">
+            <nav className="flex text-brandtext" aria-label="Breadcrumb">
               <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li className="inline-flex items-center">
                   <Link
                     to="/"
-                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-brandtext"
+                    className="inline-flex items-center text-sm font-medium hover:text-brandprimaryhover"
                   >
                     <svg
                       className="w-3 h-3 me-2.5"
@@ -136,7 +151,7 @@ const ReferenceDetail = () => {
                 <li>
                   <div className="flex items-center">
                     <svg
-                      className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                      className="rtl:rotate-180 w-3 h-3 mx-1"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -152,7 +167,7 @@ const ReferenceDetail = () => {
                     </svg>
                     <Link
                       to="../library"
-                      className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-brandtext"
+                      className="ms-1 text-sm font-medium  hover:text-brandprimaryhover md:ms-2"
                     >
                       Library
                     </Link>
@@ -175,7 +190,7 @@ const ReferenceDetail = () => {
                         d="m1 9 4-4-4-4"
                       />
                     </svg>
-                    <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
+                    <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 ">
                       {reference?.name}
                     </span>
                   </div>
@@ -197,33 +212,43 @@ const ReferenceDetail = () => {
           </div>
         </div>
       </section>
-      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* content section */}
       <section className="max-w-[1500px] mx-auto mt-12  px-8 items-center">
         <div className="flex flex-row space-x-8">
           <div className="w-3/4 flex flex-wrap gap-2">
             {/* embedd yt video */}
-            {references.map((reference, index) =>
-              reference.isVideo ? (
-                <div
+            {reference?.image_contents?.map((reference, index) => (
+              // reference.isVideo ? (
+              //   <div
+              //     key={index}
+              //     className="rounded-md border min-h-64 border-slate-50/10 overflow-clip shadow-lg w-full max-w-[512px] h-[288px]"
+              //   >
+              //     <EmbedYouTube src={reference.link}></EmbedYouTube>
+              //   </div>
+              // ) : (
+              //   <Link to={`#${reference.id}`}>
+              //     <img
+              //       key={index}
+              //       src={reference.link}
+              //       className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
+              //       onClick={() => {
+              //         setIsMaximized(true);
+              //       }}
+              //     />
+              //   </Link>
+              // )
+              <Link to={`#${reference.id}`}>
+                <img
                   key={index}
-                  className="rounded-md border min-h-64 border-slate-50/10 overflow-clip shadow-lg w-full max-w-[512px] h-[288px]"
-                >
-                  <EmbedYouTube src={reference.link}></EmbedYouTube>
-                </div>
-              ) : (
-                <Link to={`#${reference.id}`}>
-                  <img
-                    key={index}
-                    src={reference.link}
-                    className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
-                    onClick={() => {
-                      setIsMaximized(true);
-                    }}
-                  />
-                </Link>
-              )
-            )}
+                  src={reference.image_file}
+                  className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
+                  onClick={() => {
+                    handleMaximize(reference);
+                  }}
+                />
+              </Link>
+            ))}
           </div>
           <div className="w-1/4">
             <div className="flex flex-col space-y-4">
@@ -232,7 +257,7 @@ const ReferenceDetail = () => {
                 <h2>{reference?.game ?? "Error"}</h2>
                 <p>Reference Description</p>
               </div>
-              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
               <div>
                 <p>
                   Released: {formatReleaseDate(game?.release_date ?? "Error")}
@@ -249,7 +274,7 @@ const ReferenceDetail = () => {
                   </Link>
                 ))}
               </div>
-              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+              <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
               <div>
                 {user?.role === "admin" ? (
                   <div className="space-x-4">
@@ -274,7 +299,7 @@ const ReferenceDetail = () => {
           </div>
         </div>
       </section>
-      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+      <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* add popupdialog */}
       <PopupDialog
         isOpen={PopupDialogOpen}

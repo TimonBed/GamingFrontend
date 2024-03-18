@@ -9,9 +9,18 @@ import {
 
 import React, { useEffect, useRef } from "react";
 
+
+interface Image {
+  id: number;
+  title: string;
+  image_file: string;
+  reference: number;
+}
+
+
 interface imageProps {
-  src: string;
   onClose: () => void;
+  content: Image | null;
 }
 
 function useOutsideAlerter(
@@ -38,7 +47,7 @@ function useOutsideAlerter(
   }, [ref, onClose]);
 }
 
-const MaxImage = ({ src, onClose }: imageProps) => {
+const MaxImage = ({ onClose, content }: imageProps) => {
   const wrapperRef = useRef(null);
 
   useOutsideAlerter(wrapperRef, onClose);
@@ -46,11 +55,11 @@ const MaxImage = ({ src, onClose }: imageProps) => {
     <div className="max-w-[100%] mx-auto">
       <div className="flex flex-row justify-center items-center p-16">
         <div className="w-1/12"></div>
-        <div className="w-8/12 relative" ref={wrapperRef}>
+        <div className="relative w-[70%]" ref={wrapperRef}>
           <img
-            src={src}
+            src={content?.image_file}
             alt="img"
-            className="w-full h-full object-cover rounded-lg"
+            className="h-full min-w-[70%] object-cover rounded-lg"
           ></img>
           {/* Close button in the top-right corner */}
           <button
