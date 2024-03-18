@@ -56,10 +56,7 @@ const Library = () => {
                   <ContentCard
                     key={reference.id}
                     title={reference.name}
-                    description="{reference.description}"
                     link={reference.id.toString()}
-                    developer="{reference.developer}"
-                    releaseDate="{reference.releaseDate}"
                   />
                 ))}
               </div>
