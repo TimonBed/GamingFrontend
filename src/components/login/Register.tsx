@@ -30,7 +30,7 @@ export default function Register() {
     setLoading(true);
     // verify user
     await axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/users/`, {
+      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/register/`, {
         username: username,
         email: email,
         password: password,
