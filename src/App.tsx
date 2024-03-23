@@ -20,6 +20,7 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import Users from "./components/admin/Users/Users";
 import ReferencesPage from "./components/admin/References/ReferencesPage";
 import AdminReferences from "./components/admin/References/AdminReferences";
+import EmailVerification from "./components/login/EmailVerification";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
               <Route path="/games" element={<GameMain />} />
               <Route path="/register" element={<Register />} />
             </Route>
+            <Route path="/verify/:token" element={<EmailVerification />} />
 
             {/* Define a layout without Navbar for the "/admin" route */}
             <Route
