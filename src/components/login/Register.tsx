@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
 import logo from "../../assets/logo.png";
 import axios from "axios";
+import { useUser } from "../../UserContext";
 
 export default function Register() {
   // store username
@@ -12,7 +13,7 @@ export default function Register() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const { updateUser } = useUser();
   // Get navigate function
   const navigate = useNavigate();
 
@@ -37,7 +38,15 @@ export default function Register() {
         role: "user",
       })
       .then(async () => {
-        navigate("/login"); // Redirect to the home page
+        updateUser({
+          username: username,
+          email: email,
+          role: "user",
+          first_name: "",
+          last_name: "",
+          gravatar: "",
+        });
+        navigate("/verification_requested"); // Redirect to the home page
       })
       .catch(() => {
         setError(true);

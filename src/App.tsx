@@ -21,6 +21,7 @@ import Users from "./components/admin/Users/Users";
 import ReferencesPage from "./components/admin/References/ReferencesPage";
 import AdminReferences from "./components/admin/References/AdminReferences";
 import EmailVerification from "./components/login/EmailVerification";
+import VerificationRequested from "./components/login/VerificationRequested";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
               <Route path="/reference/:id" element={<ReferenceDetail />} />
               <Route path="/games" element={<GameMain />} />
               <Route path="/register" element={<Register />} />
+              <Route
+                path="/verification_requested"
+                element={<VerificationRequested />}
+              />
             </Route>
             <Route path="/verify/:token" element={<EmailVerification />} />
 
