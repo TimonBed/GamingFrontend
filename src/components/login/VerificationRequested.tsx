@@ -5,7 +5,9 @@ const VerificationRequested = () => {
   const { user } = useUser();
   const handleResendEmail = () => {
     // resend email
-    axios.post("/api/auth/resend-email", { email: user?.email });
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/resend-email`, {
+      email: user?.email,
+    });
   };
 
   return (
