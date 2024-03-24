@@ -13,6 +13,7 @@ interface User {
   last_name: string;
   password: string;
   is_active: boolean;
+  is_verified: boolean;
 }
 
 const Users = () => {
@@ -27,6 +28,7 @@ const Users = () => {
     last_name: "",
     password: "",
     is_active: false,
+    is_verified: false,
   });
 
   const openEditDialog = (user: User) => {

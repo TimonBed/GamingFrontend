@@ -15,6 +15,7 @@ interface User {
   last_name: string;
   gravatar: string;
   is_active: boolean;
+  is_verified: boolean;
 }
 
 interface UserContextProps {

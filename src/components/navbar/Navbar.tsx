@@ -43,7 +43,7 @@ export const Navbar = () => {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 ">
-      {user?.is_active === false ? (
+      {user?.is_verified === false ? (
         <div className=" bg-brandprimary/60 text-gray-400 text-center p-2">
           Your account is not active. Please check your email for verification
           link. &nbsp;
