@@ -3,9 +3,9 @@ import { FilterTime } from "./FilterTime";
 
 const Filter = () => {
   return (
-    <div className="w-64 space-y-6">
+    <div className="w-64 space-y-6 select-none">
       <div>
-        <p className="m-2 text-md font-bold text-gray-300">Filter Game</p>
+        <p className="m-2 text-md font-bold text-brandtext">Filter Game</p>
         <div className=" space-y-1">
           {/* input search for games */}
           <FilterInput
@@ -16,7 +16,7 @@ const Filter = () => {
         </div>
       </div>
       <div>
-        <p className="m-2 text-md font-bold text-gray-300">Filter Genre</p>
+        <p className="m-2 text-md font-bold text-brandtext">Filter Genre</p>
         <div className=" space-y-1">
           {/* input search for games */}
           <FilterInput
@@ -27,7 +27,7 @@ const Filter = () => {
         </div>
       </div>
       <div>
-        <p className="m-2 text-md font-bold text-gray-300">Filter Developer</p>
+        <p className="m-2 text-md font-bold text-brandtext">Filter Developer</p>
         <div className=" space-y-1">
           {/* input search for games */}
           <FilterInput
@@ -39,7 +39,7 @@ const Filter = () => {
       </div>
 
       <div>
-        <p className="m-2 text-md font-bold text-gray-300">Filter Time</p>
+        <p className="m-2 text-md font-bold text-brandtext">Filter Time</p>
         <div className=" space-y-1">
           {/* input search for games */}
           <FilterTime startYear={2016} key="game-categorie" />

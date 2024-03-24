@@ -42,7 +42,7 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 ">
+    <header className="absolute inset-x-0 top-0 z-50 bg-brandgray-800/60 shadow shadow-brandgray-850/80">
       {user?.is_verified === false ? (
         <div className=" bg-brandprimary/60 text-gray-400 text-center p-2">
           Your account is not active. Please check your email for verification
@@ -84,7 +84,7 @@ export const Navbar = () => {
         </div>
       ) : null}
       <nav
-        className="flex items-center justify-between p-6 lg:px-8 mx-12"
+        className="flex items-center justify-between p-2 lg:px-8 mx-12"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">

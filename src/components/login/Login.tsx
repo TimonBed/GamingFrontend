@@ -66,7 +66,7 @@ export default function Login() {
   // rest of your component code
 
   return (
-    <div className="h-screen bg-slate-800 items-center flex">
+    <div className="h-screen bg-brandgray-800 items-center flex select-none">
       <div className="flex flex-1 flex-col text-brandtext lg:px-8  justify-center">
         <div className="items-center flex justify-center flex-col">
           <Link to="/" className="mb-6 flex flex-row items-center space-x-4">
@@ -74,7 +74,7 @@ export default function Login() {
             <p className="text-2xl font-bold">GamingReference</p>
           </Link>
         </div>
-        <div className="mt-10 sm:mx-auto p-8 bg-brandprimary/5 shadow-md rounded-lg sm:w-full sm:max-w-md">
+        <div className="mt-10 sm:mx-auto p-8 bg-brandgray-400/5 shadow-md rounded-lg sm:w-full sm:max-w-md">
           <h1 className="mb-10 text-center text-3xl font-bold leading-9 tracking-tight ">
             Log in to continue
           </h1>

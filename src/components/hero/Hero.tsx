@@ -5,35 +5,25 @@ import HeroElement2 from "./HeroElement2";
 
 const categories = [
   {
-    title: "Invetory",
-    description: "Inventory System",
+    title: "Platzhalter",
+    description: "Platzhalter",
     link: "/library#library",
   },
   {
-    title: "Movement",
-    description: "Player Movement",
+    title: "Platzhalter",
+    description: "Platzhalter",
     link: "/library#library",
   },
   {
-    title: "UI/UX",
-    description: "User Interface and User Experience Design",
-    link: "/library#library",
-  },
-  {
-    title: "Interaction",
-    description: "World Interaction",
-    link: "/library#library",
-  },
-  {
-    title: "Physics",
-    description: "Game Physics",
+    title: "Platzhalter",
+    description: "Platzhalter",
     link: "/library#library",
   },
 ];
 
 export default function Hero() {
   return (
-    <div className="bg-gray-900">
+    <div className="bg-brandgray-900">
       <div className="relative isolate overflow-hidden pt-14">
         <img
           src={landscape}
@@ -60,7 +50,7 @@ export default function Hero() {
             <p className="mt-6 text-lg leading-8 text-gray-300">
               The Reference Library for your Game Development Journey.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="mt-10 flex items-center justify-center gap-x-6 select-none">
               <Link
                 to="/library"
                 className="rounded-md bg-brandprimary px-3.5 py-2.5 text-sm font-semibold text-brandtext shadow-sm hover:bg-brandprimaryhover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brandprimary-400"
@@ -76,15 +66,18 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row space-x-4 m-16 justify-center items-center">
-          {categories.map((category) => (
-            <CategoryCard
-              key={category.title}
-              title={category.title}
-              description={category.description}
-              link={category.link}
-            />
-          ))}
+        <div className="flex flex-col m-32">
+          <h3 className="text-brandtext text-left">Trending</h3>
+          <div className="flex flex-row space-x-8 ">
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.title}
+                title={category.title}
+                description={category.description}
+                link={category.link}
+              />
+            ))}
+          </div>
         </div>
         <div
           className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"

@@ -111,7 +111,7 @@ export const FilterInput = ({ apiEndpoint, name }: FilterInputProps) => {
         <input
           type="text"
           placeholder={name}
-          className="w-full px-4 py-2 bg-gray-800 rounded-md border border-brandprimary/10 focus:border-brandprimary  focus:ring-brandprimary"
+          className="w-full px-4 py-2 bg-brandgray-800 rounded-md border border-brandgray-500/10 focus:border-brandgray-500  focus:ring-brandgray-500"
           onClick={handleFocus}
           onBlur={closeDropdown}
           onChange={handleChange}
@@ -120,7 +120,7 @@ export const FilterInput = ({ apiEndpoint, name }: FilterInputProps) => {
       </div>
       {/* dropdown with top 5 items for autocomplete */}
       {isFocused && (
-        <div className="w-full p-1 bg-gray-800 rounded-md absolute border border-brandprimary/10 translate-y-9 z-30">
+        <div className="w-full p-1 bg-brandgray-800 rounded-md absolute border border-brandgray-500/10 translate-y-9 z-30">
           {filtered.slice(0, 5).map((item, index) => (
             <div
               key={item.id}

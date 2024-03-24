@@ -16,11 +16,11 @@ const ContentCard = ({
     <Link to={`/reference/${link}`} className="text-brandtext">
       <div className="max-w-[400px] w-[500px] shadow-lg shadow-black/20 border-2 border-slate-800/40 rounded-md overflow-hidden hover:brightness-125 hover:scale-[102%] transition-all duration-200 ease-in-out">
         <img
-          className="object-cover w-full h-40 md:h-48 lg:h-64"
+          className="object-cover w-full h-40 md:h-48 lg:h-64 border-b-2 border-white/70"
           src={preview_image || landscape}
           alt="img"
         />
-        <div className="flex flex-col bg-slate-800 p-4">
+        <div className="flex flex-col bg-brandgray-850 p-4">
           <div>
             <h4 className="text-lg font-bold">{title}</h4>
           </div>

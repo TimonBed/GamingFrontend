@@ -41,7 +41,7 @@ export const FilterTime: FC<FilterTimeProps> = ({ startYear }) => {
       <select
         value={selectedStartYear}
         onChange={handleStartChange}
-        className=" border-brandprimary/10 p-2 rounded-md w-full bg-slate-800 focus:border-brandprimary  focus:ring-brandprimary"
+        className=" border-brandgray-500/10 p-2 rounded-md w-full bg-brandgray-800 focus:border-brandgray-500  focus:ring-brandgray-500"
       >
         {years
           .filter((year) => year <= selectedEndYear)
@@ -55,7 +55,7 @@ export const FilterTime: FC<FilterTimeProps> = ({ startYear }) => {
       <select
         value={selectedEndYear}
         onChange={handleEndChange}
-        className=" border-brandprimary/10 p-2 rounded-md w-full bg-slate-800 focus:border-brandprimary  focus:ring-brandprimary"
+        className=" border-brandgray-500/10 p-2 rounded-md w-full bg-brandgray-800 focus:border-brandgray-500  focus:ring-brandgray-500"
       >
         {years
           .filter((year) => year >= selectedStartYear)

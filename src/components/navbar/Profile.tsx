@@ -23,7 +23,7 @@ const Profile = () => {
       <div>
         <Menu as="div" className="relative ml-3">
           <div>
-            <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm hover:outline-none hover:ring-1 hover:ring-white hover:ring-offset-2 hover:ring-offset-gray-800">
+            <Menu.Button className="relative flex rounded-full bg-brandgray-600 text-sm hover:outline-none hover:ring-1 hover:ring-white hover:ring-offset-2 hover:ring-offset-gray-800">
               {user?.username ? (
                 <div className="flex flex-row">
                   <Link
@@ -38,7 +38,11 @@ const Profile = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user.gravatar ? user.gravatar : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                      src={
+                        user.gravatar
+                          ? user.gravatar
+                          : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      }
                       alt=""
                     />
                   </div>

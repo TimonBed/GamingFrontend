@@ -13,19 +13,19 @@ const CategoryCard = ({
   link = "/",
 }: CategoryCardProps) => {
   return (
-    <Link to={link} className="text-brandtext">
-      <div className="relative h-72 w-48 rounded-md overflow-hidden hover:brightness-125 hover:scale-105 transition-all duration-300 ease-in-out">
+    <Link to={link} className="text-brandtext w-full ">
+      <div className="flex bg-brandgray-900/80 h-48 rounded shadow-lg shadow-black/50 overflow-hidden hover:brightness-125 hover:scale-105 transition-all duration-300 ease-in-out">
+        <div className="flex-none flex-row p-4 max-w-[40%]">
+          <div className="flex flex-col">
+            <h4 className="text-lg font-bold">{title}</h4>
+            <p className="text-sm">{description}</p>
+          </div>
+        </div>
         <img
-          className=" object-cover w-full h-full drop-shadow"
+          className="flex-1 object-cover w-full h-full"
           src={landscape}
           alt="img"
         />
-
-        {/* Overlay text */}
-        <div className="absolute inset-0 flex items-center justify-end m-4 mb-10 flex-col space-y-2">
-          <h4 className="text-lg font-bold">{title}</h4>
-          <p className="text-sm min-h-10">{description}</p>
-        </div>
       </div>
     </Link>
   );
