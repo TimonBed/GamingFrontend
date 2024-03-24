@@ -6,13 +6,10 @@ interface CategoryCardProps {
   link: string;
 }
 
-const ContentCard = ({
-  title = "Error",
-  link = "/",
-}: CategoryCardProps) => {
+const ContentCard = ({ title = "Error", link = "/" }: CategoryCardProps) => {
   return (
     <Link to={`/reference/${link}`} className="text-brandtext">
-      <div className="max-w-[400px] w-[500px] border-2 border-slate-800/40 rounded-md overflow-hidden hover:brightness-125 hover:scale-[102%] transition-all duration-200 ease-in-out">
+      <div className="max-w-[400px] w-[500px] shadow-lg shadow-black/20 border-2 border-slate-800/40 rounded-md overflow-hidden hover:brightness-125 hover:scale-[102%] transition-all duration-200 ease-in-out">
         <img
           className="object-cover w-full h-40 md:h-48 lg:h-64"
           src={landscape}
