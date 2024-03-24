@@ -45,6 +45,7 @@ export default function Register() {
           first_name: "",
           last_name: "",
           gravatar: "",
+          is_active: false,
         });
         navigate("/verification_requested"); // Redirect to the home page
       })

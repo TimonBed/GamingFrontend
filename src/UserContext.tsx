@@ -14,6 +14,7 @@ interface User {
   first_name: string;
   last_name: string;
   gravatar: string;
+  is_active: boolean;
 }
 
 interface UserContextProps {

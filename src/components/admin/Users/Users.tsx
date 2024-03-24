@@ -12,6 +12,7 @@ interface User {
   first_name: string;
   last_name: string;
   password: string;
+  is_active: boolean;
 }
 
 const Users = () => {
@@ -25,17 +26,17 @@ const Users = () => {
     first_name: "",
     last_name: "",
     password: "",
+    is_active: false,
   });
 
   const openEditDialog = (user: User) => {
     setEditDialogOpen(true);
     setTemplateUser(user);
-  }
+  };
   const closeEditDialog = () => {
     setEditDialogOpen(false);
     reloadUsers();
-  }
-
+  };
 
   const handleUserDialogSaved = () => {
     console.log(templateUser);
@@ -76,6 +77,7 @@ const Users = () => {
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Active</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +90,7 @@ const Users = () => {
                 <td className="px-4 py-2">{user.username}</td>
                 <td className="px-4 py-2">{user.email}</td>
                 <td className="px-4 py-2 capitalize">{user.role}</td>
+                <td className="px-4 py-2">{user.is_active ? "Yes" : "No"}</td>
                 <td className="pl-4 px-2 py-2">
                   <button
                     onClick={() => deleteUser(user.id)}
@@ -98,7 +101,7 @@ const Users = () => {
                 </td>
                 <td className=" py-2">
                   <button
-                  onClick={() => openEditDialog(user)}
+                    onClick={() => openEditDialog(user)}
                     className="flex items-center justify-center bg-blue-400 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-1 px-4 rounded-md transition-colors"
                   >
                     <span>Edit</span>
@@ -109,12 +112,17 @@ const Users = () => {
           })}
         </tbody>
       </table>
-      <PopupDialog isOpen={editDialogOpen} onClose={closeEditDialog} onSave={handleUserDialogSaved}>
-        <div><UserForm templateUser={templateUser} onClose={closeEditDialog}/></div>
+      <PopupDialog
+        isOpen={editDialogOpen}
+        onClose={closeEditDialog}
+        onSave={handleUserDialogSaved}
+      >
+        <div>
+          <UserForm templateUser={templateUser} onClose={closeEditDialog} />
+        </div>
       </PopupDialog>
     </div>
   );
 };
-
 
 export default Users;

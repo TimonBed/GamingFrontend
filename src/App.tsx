@@ -2,7 +2,7 @@ import "./App.css";
 import Footer from "./components/footer/footer";
 import Hero from "./components/hero/Hero";
 import Impress from "./components/impress";
-import Navbar from "./components/navbar/Navbar";
+import { Navbar } from "./components/navbar/Navbar";
 import {
   BrowserRouter as Router,
   Route,
