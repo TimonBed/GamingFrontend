@@ -9,6 +9,7 @@ interface Reference {
   id: number;
   name: string;
   game: string;
+  preview_image: string;
 }
 
 const Library = () => {
@@ -57,6 +58,7 @@ const Library = () => {
                     key={reference.id}
                     title={reference.name}
                     link={reference.id.toString()}
+                    preview_image={reference.preview_image}
                   />
                 ))}
               </div>
