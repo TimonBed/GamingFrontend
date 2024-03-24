@@ -46,11 +46,11 @@ function App() {
               <Route path="/library" element={<Library />} />
               <Route path="/reference/:id" element={<ReferenceDetail />} />
               <Route path="/games" element={<GameMain />} />
-              <Route
-                path="/verification_requested"
-                element={<VerificationRequested />}
-              />
             </Route>
+            <Route
+              path="/verification_requested"
+              element={<VerificationRequested />}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verify/:token" element={<EmailVerification />} />
