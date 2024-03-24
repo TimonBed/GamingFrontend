@@ -42,7 +42,7 @@ export default function Hero() {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl py-16 sm:py-16 lg:pt-56 lg:pb-32">
+        <div className="mx-auto max-w-2xl py-8 sm:py-16 lg:pt-32 lg:pb-16">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-brandtext sm:text-6xl">
               Gaming References
