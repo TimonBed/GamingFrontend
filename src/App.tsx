@@ -47,12 +47,12 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/reference/:id" element={<ReferenceDetail />} />
               <Route path="/games" element={<GameMain />} />
-              <Route path="/register" element={<Register />} />
               <Route
                 path="/verification_requested"
                 element={<VerificationRequested />}
               />
             </Route>
+            <Route path="/register" element={<Register />} />
             <Route path="/verify/:token" element={<EmailVerification />} />
 
             {/* Define a layout without Navbar for the "/admin" route */}
