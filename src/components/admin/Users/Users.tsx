@@ -79,7 +79,7 @@ const Users = () => {
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Active</th>
+            <th>Verified</th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@ const Users = () => {
                 <td className="px-4 py-2">{user.username}</td>
                 <td className="px-4 py-2">{user.email}</td>
                 <td className="px-4 py-2 capitalize">{user.role}</td>
-                <td className="px-4 py-2">{user.is_active ? "Yes" : "No"}</td>
+                <td className="px-4 py-2">{user.is_verified ? "Yes" : "No"}</td>
                 <td className="pl-4 px-2 py-2">
                   <button
                     onClick={() => deleteUser(user.id)}
