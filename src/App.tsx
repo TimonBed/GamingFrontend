@@ -44,7 +44,6 @@ function App() {
               <Route path="/impress" element={<Impress />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/library" element={<Library />} />
-              <Route path="/login" element={<Login />} />
               <Route path="/reference/:id" element={<ReferenceDetail />} />
               <Route path="/games" element={<GameMain />} />
               <Route
@@ -52,6 +51,7 @@ function App() {
                 element={<VerificationRequested />}
               />
             </Route>
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verify/:token" element={<EmailVerification />} />
 
