@@ -1,19 +1,6 @@
-import axios from "axios";
+import axios from "../../AxiosInterceptors";
 import { useState } from "react";
 
-interface Reference {
-  id: number;
-  name: string;
-  game: string;
-  image_contents: Image[];
-}
-
-interface Image {
-  id: number;
-  title: string;
-  image_file: string;
-  reference: number;
-}
 
 interface NewReferenceItemDialogProps {
   game: string;
@@ -22,19 +9,33 @@ interface NewReferenceItemDialogProps {
 export const NewReferenceItemDialog = ({
   game,
 }: NewReferenceItemDialogProps) => {
-  const [setName] = useState("");
-  // const [setFiles] = useState<FileList | null>(null);
+  const [files, setFiles] = useState<FileList | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      // setFiles(e.target.files);
-    }
-  }
 
 
   const handleAddReference = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    for (let i = 0; i < files!.length; i++) {
+      const formData = new FormData();
+      formData.append("title", "test");
+      console.log( files![i] instanceof File);
+      formData.append("image_file", files![i]);
+      formData.append("reference_image", "1");
+
+      await axios.post("/references/images/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+    }
     
+  }
+  const handleFilesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFiles(e.target.files);
+    }
   }
      
 
@@ -50,7 +51,6 @@ export const NewReferenceItemDialog = ({
             type="text"
             id="name"
             required
-            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>
@@ -58,7 +58,7 @@ export const NewReferenceItemDialog = ({
           <input
             type="file"
             multiple
-            onChange={handleFileChange}
+            onChange={handleFilesChanged}
             accept=".jpg, .jpeg, .webp"
             name="small-file-input"
             id="small-file-input"
