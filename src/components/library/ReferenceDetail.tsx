@@ -8,7 +8,7 @@ import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
 import axios from "../../AxiosInterceptors";
 import PopupDialog from "../PopupDialog";
-import NewReferenceItemDialog from "./NewReferenceItemDialog";
+import {NewReferenceItemDialog} from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
 import { FilterInput } from "./filter/FilterInput";
 
@@ -76,6 +76,8 @@ const ReferenceDetail = () => {
   const [editModus, setEditModus] = useState(false);
 
   const handleDeleteContentItem = (reference: Image) =>
+    // are you sure popup
+    
     axios.delete(`/references/images/${reference?.id}/`).then((res) => {
       console.log(res);
     });    
@@ -361,7 +363,7 @@ const ReferenceDetail = () => {
           console.log("save");
         }}
       >
-        <NewReferenceItemDialog></NewReferenceItemDialog>
+        <NewReferenceItemDialog game={game?.name ?? ""} />
       </PopupDialog>
     </div>
   );
