@@ -1,6 +1,7 @@
 import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useParams } from "react-router-dom";
 import MaxImage from "./MaxImage";
@@ -73,6 +74,11 @@ const ReferenceDetail = () => {
   const [isMaximized, setIsMaximized] = useState(false);
   const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
   const [editModus, setEditModus] = useState(false);
+
+  const handleDeleteContentItem = (reference: Image) =>
+    axios.delete(`/references/images/${reference?.id}/`).then((res) => {
+      console.log(res);
+    });    
 
   const handleMaximize = (reference: Image) => {
     setIsMaximized(true);
@@ -217,15 +223,15 @@ const ReferenceDetail = () => {
         <div className="flex flex-row space-x-8">
           <div className="flex flex-col w-full">
             {editModus ? (
-            <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
-              <button
-                onClick={() => setPopupDialogOpen(true)}
-                className="w-full h-full flex justify-center items-center rounded-md bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
-              >
-                Add New Reference Item
-              </button>
-            </div>
-              ): null}
+              <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
+                <button
+                  onClick={() => setPopupDialogOpen(true)}
+                  className="w-full h-full flex justify-center items-center rounded-md bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
+                >
+                  Add New Reference Item
+                </button>
+              </div>
+            ) : null}
             <div className=" justify-strech flex flex-wrap w-full gap-2">
               {/* embedd yt video */}
               {reference?.image_contents?.map((reference, index) => (
@@ -248,12 +254,21 @@ const ReferenceDetail = () => {
                 //     />
                 //   </Link>
                 // )
-                <div className="w-full min-w-[265px] max-w-[512px] flex-1">
-                                    <Link to={`#${reference.id}`} className="w-full">
+                <div className="w-full min-w-[265px] max-w-[512px] flex-1 relative overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg h-min object-cover">
+                  {/* delete cross */}
+                  {editModus && (
+                    <button
+                      onClick={() => handleDeleteContentItem(reference)}
+                      className="absolute top-2 right-2  bg-brandprimary text-white rounded-full p-1 hover:bg-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  )}
+                  <Link to={`#${reference.id}`} className="w-full">
                     <img
                       key={index}
                       src={reference.image_file}
-                      className="rounded-md border w-full border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg h-min object-cover"
+                      className="rounded-md border w-full border-slate-50/10 "
                       onClick={() => {
                         handleMaximize(reference);
                       }}

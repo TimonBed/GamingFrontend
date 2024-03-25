@@ -35,16 +35,16 @@ const AdminReferences = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.put(`/references/references/${id}/`, reference).then((res) => {
+    axios.put(`/references/references/${id}/`, reference).then(() => {
     });
     handleCancel();
   };
 
-  const handleDelete = () => {
-    axios.delete(`/references/references/${id}/`).then((res) => {
-      console.log(res);
-    });
-  };
+  // const handleDelete = () => {
+  //   axios.delete(`/references/references/${id}/`).then((res) => {
+  //     console.log(res);
+  //   });
+  // };
 
   const handleCancel = () => {
     setReference(undefined);
