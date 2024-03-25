@@ -1,17 +1,16 @@
 import axios from "../../AxiosInterceptors";
 import { useState } from "react";
 
-
 interface NewReferenceItemDialogProps {
   game: string;
+  refresh: () => void;
 }
 
 export const NewReferenceItemDialog = ({
   game,
+  refresh,
 }: NewReferenceItemDialogProps) => {
   const [files, setFiles] = useState<FileList | null>(null);
-
-
 
   const handleAddReference = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,25 +18,31 @@ export const NewReferenceItemDialog = ({
     for (let i = 0; i < files!.length; i++) {
       const formData = new FormData();
       formData.append("title", "test");
-      console.log( files![i] instanceof File);
+      console.log(files![i] instanceof File);
       formData.append("image_file", files![i]);
       formData.append("reference_image", "1");
 
-      await axios.post("/references/images/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      await axios
+        .post("/references/images/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            refresh();
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding reference:", error);
+        });
     }
-    
-  }
+  };
   const handleFilesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFiles(e.target.files);
     }
-  }
-     
+  };
 
   return (
     <div className="text-brandtext">

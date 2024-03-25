@@ -8,7 +8,7 @@ import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
 import axios from "../../AxiosInterceptors";
 import PopupDialog from "../PopupDialog";
-import {NewReferenceItemDialog} from "./NewReferenceItemDialog";
+import { NewReferenceItemDialog } from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
 import { FilterInput } from "./filter/FilterInput";
 
@@ -61,6 +61,13 @@ const ReferenceDetail = () => {
     });
   }, [id]);
 
+  const handleRefresh = () => {
+    setPopupDialogOpen(false);
+    axios.get(`/references/references/${id}/`).then((res) => {
+      setReference(res.data);
+    });
+  };
+
   const formatReleaseDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -75,12 +82,25 @@ const ReferenceDetail = () => {
   const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
   const [editModus, setEditModus] = useState(false);
 
-  const handleDeleteContentItem = (reference: Image) =>
+  const handleDeleteContentItem = (image: Image) => {
+    console.log(reference);
+    console.log(image);
+
     // are you sure popup
-    
-    axios.delete(`/references/images/${reference?.id}/`).then((res) => {
-      console.log(res);
-    });    
+
+    axios.delete(`/references/images/${image?.id}/`).then((res) => {
+      if (res.status === 204) {
+        if (reference) {
+          setReference({
+            ...reference,
+            image_contents: reference?.image_contents?.filter(
+              (item) => item.id !== image.id
+            ),
+          });
+        }
+      }
+    });
+  };
 
   const handleMaximize = (reference: Image) => {
     setIsMaximized(true);
@@ -363,7 +383,10 @@ const ReferenceDetail = () => {
           console.log("save");
         }}
       >
-        <NewReferenceItemDialog game={game?.name ?? ""} />
+        <NewReferenceItemDialog
+          refresh={handleRefresh}
+          game={game?.name ?? ""}
+        />
       </PopupDialog>
     </div>
   );
