@@ -20,7 +20,7 @@ const ContentCard = ({
           src={preview_image || landscape}
           alt="img"
         />
-        <div className="flex flex-col bg-brandgray-850 p-4">
+        <div className="flex flex-col bg-brandgray-750 p-4">
           <div>
             <h4 className="text-lg font-bold">{title}</h4>
           </div>

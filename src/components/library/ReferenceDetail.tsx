@@ -9,6 +9,7 @@ import axios from "../../AxiosInterceptors";
 import PopupDialog from "../PopupDialog";
 import NewReferenceItemDialog from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
+import { FilterInput } from "./filter/FilterInput";
 
 interface Image {
   id: number;
@@ -71,6 +72,7 @@ const ReferenceDetail = () => {
   const [PopupDialogOpen, setPopupDialogOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
+  const [editModus, setEditModus] = useState(false);
 
   const handleMaximize = (reference: Image) => {
     setIsMaximized(true);
@@ -78,8 +80,29 @@ const ReferenceDetail = () => {
     console.log("maximize", reference);
   };
 
+  const handleEditModus = () => {
+    setEditModus(true);
+  };
+
   return (
     <div className="pt-32 text-brandtext bg-brandgray-700 h-full ">
+      {editModus ? (
+        <div className=" absolute inset-0 mt-16 bg-brandprimary/40 h-min text-center font-bold text-lg justify-center">
+          Edit Modus
+          <button
+            onClick={() => setEditModus(false)}
+            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => setEditModus(false)}
+            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
+          >
+            Save
+          </button>
+        </div>
+      ) : null}
       {/* maximized window popup */}
       {isMaximized ? (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-70">
@@ -190,47 +213,82 @@ const ReferenceDetail = () => {
       </section>
       <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* content section */}
-      <section className="max-w-[1500px] mx-auto mt-12  px-8 items-center">
+      <section className="max-w-[1760px] mx-auto mt-12  px-8 items-center">
         <div className="flex flex-row space-x-8">
-          <div className="w-3/4 flex flex-wrap gap-2">
-            {/* embedd yt video */}
-            {reference?.image_contents?.map((reference, index) => (
-              // reference.isVideo ? (
-              //   <div
-              //     key={index}
-              //     className="rounded-md border min-h-64 border-slate-50/10 overflow-clip shadow-lg w-full max-w-[512px] h-[288px]"
-              //   >
-              //     <EmbedYouTube src={reference.link}></EmbedYouTube>
-              //   </div>
-              // ) : (
-              //   <Link to={`#${reference.id}`}>
-              //     <img
-              //       key={index}
-              //       src={reference.link}
-              //       className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
-              //       onClick={() => {
-              //         setIsMaximized(true);
-              //       }}
-              //     />
-              //   </Link>
-              // )
-              <Link to={`#${reference.id}`}>
-                <img
-                  key={index}
-                  src={reference.image_file}
-                  className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
-                  onClick={() => {
-                    handleMaximize(reference);
-                  }}
-                />
-              </Link>
-            ))}
+          <div className="flex flex-col w-full">
+            {editModus ? (
+            <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
+              <button
+                onClick={() => setPopupDialogOpen(true)}
+                className="w-full h-full flex justify-center items-center rounded-md bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
+              >
+                Add New Reference Item
+              </button>
+            </div>
+              ): null}
+            <div className=" justify-strech flex flex-wrap w-full gap-2">
+              {/* embedd yt video */}
+              {reference?.image_contents?.map((reference, index) => (
+                // reference.isVideo ? (
+                //   <div
+                //     key={index}
+                //     className="rounded-md border min-h-64 border-slate-50/10 overflow-clip shadow-lg w-full max-w-[512px] h-[288px]"
+                //   >
+                //     <EmbedYouTube src={reference.link}></EmbedYouTube>
+                //   </div>
+                // ) : (
+                //   <Link to={`#${reference.id}`}>
+                //     <img
+                //       key={index}
+                //       src={reference.link}
+                //       className="rounded-md border border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg w-min h-min max-w-[512px] max-h-[288px] object-cover"
+                //       onClick={() => {
+                //         setIsMaximized(true);
+                //       }}
+                //     />
+                //   </Link>
+                // )
+                <div className="w-full min-w-[265px] max-w-[512px] flex-1">
+                                    <Link to={`#${reference.id}`} className="w-full">
+                    <img
+                      key={index}
+                      src={reference.image_file}
+                      className="rounded-md border w-full border-slate-50/10 overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg h-min object-cover"
+                      onClick={() => {
+                        handleMaximize(reference);
+                      }}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="w-1/4">
             <div className="flex flex-col space-y-4">
               <div>
-                <h1 className="uppercase">{reference?.name ?? "Error"}</h1>
-                <h2>{reference?.game ?? "Error"}</h2>
+                {/* title and game name */}
+                {editModus ? (
+                  <div className="space-y-2">
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 bg-brandgray-800 rounded-md border border-brandgray-500/10 focus:border-brandgray-500  focus:ring-brandgray-500"
+                      value={reference?.name}
+                    ></input>
+                    <div className=" space-y-1">
+                      {/* input search for games */}
+                      <FilterInput
+                        name="Search for Game"
+                        apiEndpoint="references/games/"
+                        key="game"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h1 className="uppercase">{reference?.name ?? "Error"}</h1>
+                    <h2>{reference?.game ?? "Error"}</h2>
+                  </div>
+                )}
                 <p>Reference Description</p>
               </div>
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
@@ -253,18 +311,22 @@ const ReferenceDetail = () => {
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
               <div>
                 {user?.role === "admin" ? (
-                  <div className="space-x-4">
-                    <button
-                      onClick={() => setPopupDialogOpen(true)}
-                      className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
-                    >
-                      Add Media
-                    </button>
+                  <div className="space-x-4 w-full">
+                    {/* show edit when not in edit modus */}
+                    {editModus ? null : (
+                      <button
+                        onClick={() => handleEditModus()}
+                        className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                      >
+                        Edit
+                      </button>
+                    )}
+
                     <Link
                       to={`/admin/references/${id}`}
-                      className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                      className=" bg-yellow-600 text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
                     >
-                      Edit Reference
+                      Edit in Admin
                     </Link>
                   </div>
                 ) : (

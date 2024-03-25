@@ -33,7 +33,7 @@ const Library = () => {
   }, []);
 
   return (
-    <div className="bg-brandgray-900 text-brandtext h-full">
+    <div className="bg-brandgray-700 text-brandtext h-full">
       <div className="max-w-[2100px]  mb-8 mx-auto items-center">
         <div className="pt-32 mx-8 max-w-[1500px] sm:mx-auto items-center flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight">
@@ -47,7 +47,7 @@ const Library = () => {
 
         <section id="library">
           <div className="flex flex-row mx-8 mt-16 space-x-8">
-            <div className="p-8 rounded-md shadow-lg shadow-black/20 bg-brandgray-850 h-min">
+            <div className="p-8 rounded-md shadow-lg shadow-black/20 bg-brandgray-750 h-min">
               <h3>Filter</h3>
               <Filter />
             </div>

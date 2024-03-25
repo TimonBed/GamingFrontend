@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../AxiosInterceptors";
 import { useEffect, useState } from "react";
 
@@ -19,6 +19,7 @@ const AdminReferences = () => {
   const { id } = useParams();
   const [reference, setReference] = useState<Reference>();
   const [games, setGames] = useState<Game[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`/references/references/${id}/`).then((res) => {
@@ -35,8 +36,19 @@ const AdminReferences = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     axios.put(`/references/references/${id}/`, reference).then((res) => {
+    });
+    handleCancel();
+  };
+
+  const handleDelete = () => {
+    axios.delete(`/references/references/${id}/`).then((res) => {
       console.log(res);
     });
+  };
+
+  const handleCancel = () => {
+    setReference(undefined);
+    navigate("/admin/references");
   };
 
   return (
@@ -74,12 +86,22 @@ const AdminReferences = () => {
               ))}
             </select>
           </div>
-          <div>
+          <div className="w-full justify-between flex flex-row space-x-3">
             <button
               type="submit"
               className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
             >
               Save
+            </button>
+            <button className="bg-red-500 text-white p-2 px-8 rounded-md hover:bg-red-600 active:bg-red-700">
+              Delete
+            </button>
+            <button className="bg-yellow-500 text-white p-2 px-8 rounded-md hover:bg-yellow-600 active:bg-yellow-700"
+             onClick={handleCancel}>
+              Cancel
+            </button>
+            <button onClick={() => navigate(`/reference/${reference?.id}`)} className="bg-blue-500 text-white p-2 px-8 rounded-md hover:bg-blue-600 active:bg-blue-700">
+              User View
             </button>
           </div>
         </div>
