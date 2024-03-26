@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ContentCard from "./ContentCard";
 import Filter from "./filter/Filter";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ interface Reference {
 
 const Library = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.hash) {
       const element = document.getElementById(location.hash.slice(1));
@@ -48,6 +49,12 @@ const Library = () => {
         <section id="library">
           <div className="flex flex-row mx-8 mt-16 space-x-8">
             <div className="p-8 rounded-md shadow-lg shadow-black/20 bg-brandgray-750 h-min">
+              {/* add new reference */}
+              <button onClick={() => navigate("/reference/new")
+              } className="bg-brandprimary text-white p-3 w-full mb-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive">
+                Add Reference
+              </button>
+              {/* filter */}
               <h3>Filter</h3>
               <Filter />
             </div>

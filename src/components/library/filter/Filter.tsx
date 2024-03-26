@@ -4,6 +4,7 @@ import { FilterTime } from "./FilterTime";
 const Filter = () => {
   return (
     <div className="w-64 space-y-6 select-none">
+
       <div>
         <p className="m-2 text-md font-bold text-brandtext">Filter Game</p>
         <div className=" space-y-1">

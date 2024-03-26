@@ -59,6 +59,10 @@ const ReferenceDetail = () => {
 
   // get reference with id
   useEffect(() => {
+    if(id === "new"){
+      setEditModus(true);
+      return;
+    }
     axios.get(`/references/references/${id}/`).then((res) => {
       setReference(res.data);
       setPreviewReference(res.data);
@@ -372,7 +376,7 @@ const ReferenceDetail = () => {
                 <p>Reference Description</p>
               </div>
               {/* preview image */}
-              {editModus ? (
+              {editModus && previewReference ? (
                 <div className="flex flex-col">
                   <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
                   <h2>Preview Image</h2>
