@@ -153,13 +153,13 @@ const ReferenceDetail = () => {
           Edit Modus
           <button
             onClick={handleCancelReference}
-            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
+            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
           >
             Cancel
           </button>
           <button
             onClick={handleSaveReference}
-            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
+            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
           >
             Save
           </button>
@@ -184,7 +184,7 @@ const ReferenceDetail = () => {
             {/* back button with arrow */}
             <Link
               to="/library"
-              className="flex items-center flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-md"
+              className="flex items-center flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded"
             >
               <ArrowLongLeftIcon className="h-6 w-6" />
               <p>Back</p>
@@ -262,11 +262,11 @@ const ReferenceDetail = () => {
 
           {/* next prev buttons */}
           <div className="inline-flex space-x-1">
-            <button className="flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-l-md">
+            <button className="flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-l">
               <ArrowLongLeftIcon className="h-6 w-6" />
               <p>Last</p>
             </button>
-            <button className=" flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-r-md">
+            <button className=" flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-r">
               <p>Next</p>
               <ArrowLongRightIcon className="h-6 w-6" />
             </button>
@@ -282,7 +282,7 @@ const ReferenceDetail = () => {
               <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
                 <button
                   onClick={() => setPopupDialogOpen(true)}
-                  className="w-full h-full flex justify-center items-center rounded-md bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
+                  className="w-full h-full flex justify-center items-center rounded bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
                 >
                   Add New Reference Item
                 </button>
@@ -317,7 +317,7 @@ const ReferenceDetail = () => {
                     <div className="flex flex-row ">
                       <button
                         onClick={() => handleThumbnailSet(reference)}
-                        className="absolute top-2 left-2 px-4 bg-brandprimary text-white rounded-full p-1 hover:bg-brandprimaryhover focus:bg-brandprimaryfocus"
+                        className="absolute top-2 left-2 px-4 bg-brandprimary text-white rounded p-1 hover:bg-brandprimaryhover focus:bg-brandprimaryfocus"
                       >
                         Make Thumbnail
                       </button>
@@ -333,7 +333,7 @@ const ReferenceDetail = () => {
                     <img
                       key={index}
                       src={reference.image_file}
-                      className="rounded-md border w-full border-slate-50/10 "
+                      className="rounded border w-full border-slate-50/10 "
                       onClick={() => {
                         handleMaximize(reference);
                       }}
@@ -351,7 +351,7 @@ const ReferenceDetail = () => {
                   <div className="space-y-2">
                     <input
                       type="text"
-                      className="w-full px-4 py-2 bg-brandgray-800 rounded-md border border-brandgray-500/10 focus:border-brandgray-500  focus:ring-brandgray-500"
+                      className="w-full px-4 py-2 bg-brandgray-800 rounded border border-brandgray-500/10 focus:border-brandgray-500  focus:ring-brandgray-500"
                       value={reference?.name}
                     ></input>
                     <div className=" space-y-1">
@@ -378,7 +378,7 @@ const ReferenceDetail = () => {
                   <h2>Preview Image</h2>
                   <img
                     src={previewReference?.preview_image ?? "Error"}
-                    className="rounded-md border border-slate-50/10 w-full aspect-square object-cover"
+                    className="rounded border border-slate-50/10 w-full aspect-square object-cover"
                   />
                 </div>
               ) : null}
@@ -393,7 +393,7 @@ const ReferenceDetail = () => {
                 {game?.game_category.map((tag) => (
                   <Link
                     to="/library"
-                    className="rounded-md border border-slate-50/10 min-w-16 text-center p-1 my-auto text-sm bg-brandprimary/40 hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                    className="rounded border border-slate-50/10 min-w-16 text-center p-1 my-auto text-sm bg-brandprimary/40 hover:bg-brandprimaryhover active:bg-brandprimaryactive"
                   >
                     <p>{tag}</p>
                   </Link>
@@ -407,7 +407,7 @@ const ReferenceDetail = () => {
                     {editModus ? null : (
                       <button
                         onClick={() => handleEditModus()}
-                        className="bg-brandprimary text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                        className="bg-brandprimary text-white p-2 px-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive"
                       >
                         Edit
                       </button>
@@ -415,7 +415,7 @@ const ReferenceDetail = () => {
 
                     <Link
                       to={`/admin/references/${id}`}
-                      className=" bg-yellow-600 text-white p-2 px-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+                      className=" bg-yellow-600 text-white p-2 px-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive"
                     >
                       Edit in Admin
                     </Link>
