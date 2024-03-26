@@ -1,7 +1,4 @@
-import {
-  ArrowLongLeftIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
@@ -9,7 +6,7 @@ import axios from "../../AxiosInterceptors";
 import PopupDialog from "../PopupDialog";
 import { NewReferenceItemDialog } from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
-import { FilterInput } from "./filter/FilterInput";
+import { GameInput } from "./GameInput";
 
 interface Image {
   id: number;
@@ -66,14 +63,18 @@ const ReferenceDetail = () => {
       setPreviewReference({
         id: 0,
         name: "",
-        game: "Astroneer",
+        game: "",
         image_contents: [],
         preview_image: "",
       });
 
       return;
     }
-    axios.get(`/references/references/${id}/`).then((res) => {
+    fetchReference();
+  }, [id]);
+
+  const fetchReference = async () => {
+    await axios.get(`/references/references/${id}/`).then((res) => {
       setReference(res.data);
       setPreviewReference(res.data);
       console.log(res.data);
@@ -81,7 +82,7 @@ const ReferenceDetail = () => {
         setGame(res.data);
       });
     });
-  }, [id]);
+  }
 
   const handleNewImages = (dialogimages: FileList) => {
     setPopupDialogOpen(false);
@@ -116,9 +117,17 @@ const ReferenceDetail = () => {
       console.log("name");
       return false;
     }
-    if (newImages?.length === 0  && previewReference?.image_contents.length === 0) {
+    if (
+      newImages?.length === 0 &&
+      previewReference?.image_contents.length === 0
+    ) {
       setShowValidationErrors(true);
       console.log("images");
+      return false;
+    }
+    if (reference.game === "") {
+      setShowValidationErrors(true);
+      console.log("game");
       return false;
     }
     // if (reference.preview_image.length === 0){
@@ -129,82 +138,85 @@ const ReferenceDetail = () => {
     return true;
   };
 
+  const uploadImages = (images: File[], reference: Reference) => {
+    for (let i = 0; i < images.length; i++) {
+      console.log(images[i]);
+      const formData = new FormData();
+      formData.append("title", "test");
+      formData.append("image_file", images[i]);
+      formData.append("reference_image", reference?.id.toString());
+
+      axios
+        .post("/references/images/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          setPreviewReference({
+            ...reference,
+            preview_image: response.data.image_file,
+          });
+          const setPreviewImage = async () => {
+            await axios
+              .put(`/references/references/${reference.id}/`, {
+                ...reference,
+                preview_image: response.data.image_file,
+              })
+              .then((response) => {
+                if (response.status === 200) {
+                  setPreviewReference(response.data);
+                }
+              });
+          };
+          setPreviewImage();
+        })
+        .catch((error) => {
+          console.error("Error adding reference:", error);
+        });
+    }
+  };
+
   const handleSaveReference = async () => {
     if (previewReference && validateReference(previewReference)) {
-      // upload files
-
       if (id === "new") {
-        await axios
-          .post(`/references/references/`, previewReference)
-          .then((res) => {
+        await axios.post(`/references/references/`, previewReference)
+          .then(async (res) => {
             if (res.status === 201) {
               setPreviewReference(res.data);
               setReference(res.data);
               setEditModus(false);
-              for (let i = 0; i < newImages!.length; i++) {
-                if (!reference) {
-                  const formData = new FormData();
-                  formData.append("title", "test");
-                  console.log(newImages![i] instanceof File);
-                  formData.append("image_file", newImages![i]);
-                  formData.append("reference_image", res.data.id.toString());
-
-                  const uploadImages = async () => {
-                    await axios
-                      .post("/references/images/", formData, {
-                        headers: {
-                          "Content-Type": "multipart/form-data",
-                        },
-                      })
-                      .then((response) => {
-                        if (response.status === 201) {
-                          setPreviewReference({...res.data, preview_image: response.data.image_file});
-                          const setPreviewImage = async () => {
-                            await axios
-                              .put(`/references/references/${res.data.id}/`, {
-                                ...res.data,
-                                preview_image: response.data.image_file,
-                              })
-                              .then((response) => {
-                                if (response.status === 200) {
-                                  setPreviewReference(response.data);
-                                  navigate(`/reference/${res.data.id}`);
-                        }
-                              });
-                          };
-                          setPreviewImage();
-                        }
-                      })
-                      .catch((error) => {
-                        console.error("Error adding reference:", error);
-                      })
-                      .finally(() => {
-                        setNewImages([]);
-                      });
-                  };
-
-                  uploadImages();
-                }
-              }
+  
+              // Upload images
+              await uploadImages(newImages, res.data);
+  
+              setNewImages([]);
+              console.log("navigate", res.data);
+              navigate(`/reference/${res.data.id}`);
             }
           });
       } else {
-        axios
-          .put(`/references/references/${reference?.id}/`, previewReference)
-          .then(
-            (res) => {
-              if (res.status === 200) {
-                setPreviewReference(res.data);
-                setEditModus(false);
-              }
-            },
-            (err) => {
-              console.log(err);
+        axios.put(`/references/references/${reference?.id}/`, previewReference)
+          .then(async (res) => {
+            if (res.status === 200) {
+              // Upload images
+              await uploadImages(newImages, res.data);
+  
+              setPreviewReference(res.data);
+              setReference(res.data);
+              setEditModus(false);
+              setNewImages([]);
+              fetchReference();
+              
             }
-          );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
   };
+  
 
   const handleDeleteContentItem = (image: Image) => {
     console.log(reference);
@@ -243,6 +255,16 @@ const ReferenceDetail = () => {
     }
     setPreviewReference(reference);
     setEditModus(false);
+  };
+
+  const handleGameChanged = (game: Game) => {
+    console.log(game);
+    if (previewReference) {
+      setPreviewReference({
+        ...previewReference,
+        game: game.name,
+      });
+    }
   };
 
   const handlePreviewReferenceItemChange = (
@@ -395,8 +417,8 @@ const ReferenceDetail = () => {
       <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* content section */}
       <section className="max-w-[1760px] mx-auto mt-12  px-8 items-center">
-        <div className="flex flex-row space-x-8">
-          <div className="flex flex-col w-full">
+        <div className="flex flex-row space-x-8 ">
+          <div className="flex flex-col w-full  max-h-[1000px] overflow-scroll pr-4">
             {editModus ? (
               <div>
                 {/* error message */}
@@ -497,6 +519,7 @@ const ReferenceDetail = () => {
                         Please fill out Reference Name
                       </p>
                     ) : null}
+                    <p className=" font-bold text-lg">Reference Name</p>
                     <input
                       type="text"
                       name="name"
@@ -511,16 +534,18 @@ const ReferenceDetail = () => {
                       {showValidationErrors && previewReference?.game === "" ? (
                         <p className="text-red-500">Please set Related Game</p>
                       ) : null}
-                      <FilterInput
-                        name="game"
-                        apiEndpoint="references/games/"
-                        key="game"
+                      <GameInput
+                        onChange={handleGameChanged}
+                        oldSelected={reference?.game}
+                        key={"game"}
                       />
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <h1 className="uppercase">{reference?.name ?? "Error"}</h1>
+                    <h1 className="uppercase">
+                      {previewReference?.name ?? "Error"}
+                    </h1>
                     <h2>{reference?.game ?? "Error"}</h2>
                   </div>
                 )}

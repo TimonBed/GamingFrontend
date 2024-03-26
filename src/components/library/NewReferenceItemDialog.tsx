@@ -83,7 +83,7 @@ export const NewReferenceItemDialog = ({
         </div>
       </form>
       {/* show preview of images before upload */}
-      <div className="flex flex-row space-x-4">
+      <div className="flex flex-wrap justify-evenly gap-y-4 p-4 max-h-[450px] overflow-scroll">
         {files &&
           Array.from(files).map((file, index) => (
             <img
