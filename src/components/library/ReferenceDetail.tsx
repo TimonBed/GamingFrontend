@@ -146,6 +146,10 @@ const ReferenceDetail = () => {
   };
 
   const handleCancelReference = () => {
+    if(id === "new"){
+      window.history.back();
+      return;
+    }
     setPreviewReference(reference);
     setEditModus(false);
   };
