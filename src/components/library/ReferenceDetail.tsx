@@ -1,6 +1,5 @@
 import {
   ArrowLongLeftIcon,
-  ArrowLongRightIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useParams } from "react-router-dom";

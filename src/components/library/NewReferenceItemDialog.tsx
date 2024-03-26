@@ -1,4 +1,3 @@
-import axios from "../../AxiosInterceptors";
 import { useState } from "react";
 
 interface NewReferenceItemDialogProps {
