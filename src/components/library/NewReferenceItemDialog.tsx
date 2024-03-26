@@ -3,40 +3,41 @@ import { useState } from "react";
 
 interface NewReferenceItemDialogProps {
   game: string;
-  refresh: () => void;
+  images: (files: FileList) => void;
 }
 
 export const NewReferenceItemDialog = ({
   game,
-  refresh,
+  images,
 }: NewReferenceItemDialogProps) => {
   const [files, setFiles] = useState<FileList | null>(null);
 
   const handleAddReference = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    for (let i = 0; i < files!.length; i++) {
-      const formData = new FormData();
-      formData.append("title", "test");
-      console.log(files![i] instanceof File);
-      formData.append("image_file", files![i]);
-      formData.append("reference_image", "1");
+    // for (let i = 0; i < files!.length; i++) {
+    //   const formData = new FormData();
+    //   formData.append("title", "test");
+    //   console.log(files![i] instanceof File);
+    //   formData.append("image_file", files![i]);
+    //   formData.append("reference_image", "1");
 
-      await axios
-        .post("/references/images/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          if (response.status === 201) {
-            refresh();
-          }
-        })
-        .catch((error) => {
-          console.error("Error adding reference:", error);
-        });
-    }
+    //   await axios
+    //     .post("/references/images/", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       if (response.status === 201) {
+    //         refresh();
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error adding reference:", error);
+    //     });
+    // }
+    images(files!);
   };
   const handleFilesChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -82,6 +83,18 @@ export const NewReferenceItemDialog = ({
           </button>
         </div>
       </form>
+      {/* show preview of images before upload */}
+      <div className="flex flex-row space-x-4">
+        {files &&
+          Array.from(files).map((file, index) => (
+            <img
+              key={index}
+              src={URL.createObjectURL(file)}
+              alt="preview"
+              className="w-32 h-32"
+            />
+          ))}
+          </div>
     </div>
   );
 };

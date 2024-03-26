@@ -48,11 +48,11 @@ const Library = () => {
 
         <section id="library">
           <div className="flex flex-row mx-8 mt-16 space-x-8">
-            <div className="p-8 rounded-md shadow-lg shadow-black/20 bg-brandgray-750 h-min">
+            <div className="p-8 rounded shadow-lg shadow-black/20 bg-brandgray-750 h-min">
               {/* add new reference */}
               <button onClick={() => navigate("/reference/new")
-              } className="bg-brandprimary text-white p-3 w-full mb-8 rounded-md hover:bg-brandprimaryhover active:bg-brandprimaryactive">
-                Add Reference
+              } className="bg-brandprimary text-white p-3 w-full mb-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive">
+                Upload New Reference
               </button>
               {/* filter */}
               <h3>Filter</h3>

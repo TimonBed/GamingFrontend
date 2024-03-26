@@ -3,7 +3,7 @@ import {
   ArrowLongRightIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
 import axios from "../../AxiosInterceptors";
@@ -56,11 +56,22 @@ const ReferenceDetail = () => {
   const [isMaximized, setIsMaximized] = useState(false);
   const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
   const [editModus, setEditModus] = useState(false);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const navigate = useNavigate();
 
   // get reference with id
   useEffect(() => {
-    if(id === "new"){
+    if (id === "new") {
       setEditModus(true);
+      setPreviewReference({
+        id: 0,
+        name: "",
+        game: "Astroneer",
+        image_contents: [],
+        preview_image: "",
+      });
+
       return;
     }
     axios.get(`/references/references/${id}/`).then((res) => {
@@ -73,11 +84,12 @@ const ReferenceDetail = () => {
     });
   }, [id]);
 
-  const handleRefresh = () => {
+  const handleNewImages = (dialogimages: FileList) => {
     setPopupDialogOpen(false);
-    axios.get(`/references/references/${id}/`).then((res) => {
-      setReference(res.data);
-    });
+
+    const img = Array.from(dialogimages);
+    // add to new images
+    setNewImages((prevImages) => [...prevImages, ...img]);
   };
 
   const formatReleaseDate = (dateString: string) => {
@@ -99,20 +111,100 @@ const ReferenceDetail = () => {
     console.log("thumbnail set", previewReference);
   };
 
-  const handleSaveReference = () => {
-    axios
-      .put(`/references/references/${reference?.id}/`, previewReference)
-      .then(
-        (res) => {
-          if (res.status === 200) {
-            console.log(res.data);
-            setEditModus(false);
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+  const validateReference = (reference: Reference) => {
+    if (reference.name === "") {
+      setShowValidationErrors(true);
+      console.log("name");
+      return false;
+    }
+    if (newImages?.length === 0  && previewReference?.image_contents.length === 0) {
+      setShowValidationErrors(true);
+      console.log("images");
+      return false;
+    }
+    // if (reference.preview_image.length === 0){
+    //   setShowValidationErrors(true);
+    //   console.log("preview");
+    //   return false;
+    // }
+    return true;
+  };
+
+  const handleSaveReference = async () => {
+    if (previewReference && validateReference(previewReference)) {
+      // upload files
+
+      if (id === "new") {
+        await axios
+          .post(`/references/references/`, previewReference)
+          .then((res) => {
+            if (res.status === 201) {
+              setPreviewReference(res.data);
+              setReference(res.data);
+              setEditModus(false);
+              for (let i = 0; i < newImages!.length; i++) {
+                if (!reference) {
+                  const formData = new FormData();
+                  formData.append("title", "test");
+                  console.log(newImages![i] instanceof File);
+                  formData.append("image_file", newImages![i]);
+                  formData.append("reference_image", res.data.id.toString());
+
+                  const uploadImages = async () => {
+                    await axios
+                      .post("/references/images/", formData, {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                      })
+                      .then((response) => {
+                        if (response.status === 201) {
+                          setPreviewReference({...res.data, preview_image: response.data.image_file});
+                          const setPreviewImage = async () => {
+                            await axios
+                              .put(`/references/references/${res.data.id}/`, {
+                                ...res.data,
+                                preview_image: response.data.image_file,
+                              })
+                              .then((response) => {
+                                if (response.status === 200) {
+                                  setPreviewReference(response.data);
+                                  navigate(`/reference/${res.data.id}`);
+                        }
+                              });
+                          };
+                          setPreviewImage();
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error adding reference:", error);
+                      })
+                      .finally(() => {
+                        setNewImages([]);
+                      });
+                  };
+
+                  uploadImages();
+                }
+              }
+            }
+          });
+      } else {
+        axios
+          .put(`/references/references/${reference?.id}/`, previewReference)
+          .then(
+            (res) => {
+              if (res.status === 200) {
+                setPreviewReference(res.data);
+                setEditModus(false);
+              }
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+      }
+    }
   };
 
   const handleDeleteContentItem = (image: Image) => {
@@ -146,12 +238,32 @@ const ReferenceDetail = () => {
   };
 
   const handleCancelReference = () => {
-    if(id === "new"){
+    if (id === "new") {
       window.history.back();
       return;
     }
     setPreviewReference(reference);
     setEditModus(false);
+  };
+
+  const handlePreviewReferenceItemChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log(e.target.name, e.target.value);
+    if (previewReference) {
+      setPreviewReference({
+        ...previewReference,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  const handleDelete = () => {
+    axios.delete(`/references/references/${reference?.id}/`).then((res) => {
+      if (res.status === 204) {
+        navigate("/library");
+      }
+    });
   };
 
   return (
@@ -186,7 +298,7 @@ const ReferenceDetail = () => {
       )}
       <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* nav section */}
-      <section className=" max-w-[1500px] px-8 mx-auto">
+      <section className=" max-w-[1760px] px-8 mx-auto">
         <div className="flex felx-row justify-between">
           <div className="flex flex-row space-x-16">
             {/* back button with arrow */}
@@ -270,14 +382,14 @@ const ReferenceDetail = () => {
 
           {/* next prev buttons */}
           <div className="inline-flex space-x-1">
-            <button className="flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-l">
+            {/* <Link to="/" className="flex disabled flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-l">
               <ArrowLongLeftIcon className="h-6 w-6" />
               <p>Last</p>
-            </button>
-            <button className=" flex flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-r">
+            </Link>
+            <Link to="/" className=" flex disabled flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-r">
               <p>Next</p>
               <ArrowLongRightIcon className="h-6 w-6" />
-            </button>
+            </Link> */}
           </div>
         </div>
       </section>
@@ -287,13 +399,36 @@ const ReferenceDetail = () => {
         <div className="flex flex-row space-x-8">
           <div className="flex flex-col w-full">
             {editModus ? (
-              <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
-                <button
-                  onClick={() => setPopupDialogOpen(true)}
-                  className="w-full h-full flex justify-center items-center rounded bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
-                >
-                  Add New Reference Item
-                </button>
+              <div>
+                {/* error message */}
+                {showValidationErrors &&
+                newImages?.length === 0 &&
+                previewReference?.image_contents?.length === 0 ? (
+                  <p className="text-red-500">Please add atleast one Image</p>
+                ) : null}
+                <div className=" w-full rounded border-2 border-dashed border-brandgray-400 h-32 mb-4">
+                  <button
+                    onClick={() => setPopupDialogOpen(true)}
+                    className="w-full h-full flex justify-center items-center rounded bg-brandgray-800 hover:bg-brandgray-700 active:bg-brandgray-900 text-brandtext font-bold"
+                  >
+                    Add New Reference Item
+                  </button>
+                </div>
+                {/* show new images */}
+                {newImages ? (
+                  <div>
+                    <div className="flex flex-wrap gap-2">
+                      {Array.from(newImages).map((image, index) => (
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(image)}
+                          className="rounded-md border border-slate-50/10 overflow-clip shadow-lg w-min h-min max-w-[265px] max-h-[288px] object-cover"
+                        />
+                      ))}
+                    </div>
+                    <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
+                  </div>
+                ) : null}
               </div>
             ) : null}
             <div className=" justify-strech flex flex-wrap w-full gap-2">
@@ -357,15 +492,28 @@ const ReferenceDetail = () => {
                 {/* title and game name */}
                 {editModus ? (
                   <div className="space-y-2">
+                    {/* error message */}
+                    {showValidationErrors && previewReference?.name === "" ? (
+                      <p className="text-red-500">
+                        Please fill out Reference Name
+                      </p>
+                    ) : null}
                     <input
                       type="text"
+                      name="name"
+                      onChange={(e) => handlePreviewReferenceItemChange(e)}
+                      placeholder="Reference Name"
                       className="w-full px-4 py-2 bg-brandgray-800 rounded border border-brandgray-500/10 focus:border-brandgray-500  focus:ring-brandgray-500"
                       value={reference?.name}
                     ></input>
                     <div className=" space-y-1">
                       {/* input search for games */}
+                      {/* error message */}
+                      {showValidationErrors && previewReference?.game === "" ? (
+                        <p className="text-red-500">Please set Related Game</p>
+                      ) : null}
                       <FilterInput
-                        name="Search for Game"
+                        name="game"
                         apiEndpoint="references/games/"
                         key="game"
                       />
@@ -410,7 +558,7 @@ const ReferenceDetail = () => {
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
               <div>
                 {user?.role === "admin" ? (
-                  <div className="space-x-4 w-full">
+                  <div className="space-x-4 w-full flex flex-row h-10">
                     {/* show edit when not in edit modus */}
                     {editModus ? null : (
                       <button
@@ -425,8 +573,14 @@ const ReferenceDetail = () => {
                       to={`/admin/references/${id}`}
                       className=" bg-yellow-600 text-white p-2 px-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive"
                     >
-                      Edit in Admin
+                      Admin
                     </Link>
+                    <button
+                      onClick={handleDelete}
+                      className="bg-red-500 text-white p-2 px-8 rounded hover:bg-red-600 active:bg-red-700"
+                    >
+                      Delete
+                    </button>
                   </div>
                 ) : null}
               </div>
@@ -444,7 +598,7 @@ const ReferenceDetail = () => {
         }}
       >
         <NewReferenceItemDialog
-          refresh={handleRefresh}
+          images={(e) => handleNewImages(e)}
           game={game?.name ?? ""}
         />
       </PopupDialog>
