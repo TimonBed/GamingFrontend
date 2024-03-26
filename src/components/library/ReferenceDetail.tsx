@@ -24,6 +24,7 @@ interface Reference {
   name: string;
   game: string;
   image_contents: Image[];
+  preview_image: string;
 }
 
 interface Game {
@@ -49,11 +50,18 @@ const ReferenceDetail = () => {
 
   const { id } = useParams();
   const [reference, setReference] = useState<Reference>();
+  const [previewReference, setPreviewReference] = useState<Reference>();
   const [game, setGame] = useState<Game>();
+  const [PopupDialogOpen, setPopupDialogOpen] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
+  const [editModus, setEditModus] = useState(false);
+
   // get reference with id
   useEffect(() => {
     axios.get(`/references/references/${id}/`).then((res) => {
       setReference(res.data);
+      setPreviewReference(res.data);
       console.log(res.data);
       axios.get(`/references/games/${res.data.game}/`).then((res) => {
         setGame(res.data);
@@ -77,10 +85,31 @@ const ReferenceDetail = () => {
     });
   };
 
-  const [PopupDialogOpen, setPopupDialogOpen] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
-  const [MaximizedContent, setMaximizedContent] = useState<Image | null>(null);
-  const [editModus, setEditModus] = useState(false);
+  const handleThumbnailSet = (image: Image) => {
+    if (previewReference) {
+      setPreviewReference({
+        ...previewReference,
+        preview_image: image.image_file,
+      });
+    }
+    console.log("thumbnail set", previewReference);
+  };
+
+  const handleSaveReference = () => {
+    axios
+      .put(`/references/references/${reference?.id}/`, previewReference)
+      .then(
+        (res) => {
+          if (res.status === 200) {
+            console.log(res.data);
+            setEditModus(false);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  };
 
   const handleDeleteContentItem = (image: Image) => {
     console.log(reference);
@@ -112,19 +141,24 @@ const ReferenceDetail = () => {
     setEditModus(true);
   };
 
+  const handleCancelReference = () => {
+    setPreviewReference(reference);
+    setEditModus(false);
+  };
+
   return (
     <div className="pt-32 text-brandtext bg-brandgray-700 h-full ">
       {editModus ? (
         <div className=" absolute inset-0 mt-16 bg-brandprimary/40 h-min text-center font-bold text-lg justify-center">
           Edit Modus
           <button
-            onClick={() => setEditModus(false)}
+            onClick={handleCancelReference}
             className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
           >
             Cancel
           </button>
           <button
-            onClick={() => setEditModus(false)}
+            onClick={handleSaveReference}
             className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded-md hover:bg-brandgray-700 active:bg-brandgray-900"
           >
             Save
@@ -279,12 +313,21 @@ const ReferenceDetail = () => {
                 <div className="w-full min-w-[265px] max-w-[512px] flex-1 relative overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg h-min object-cover">
                   {/* delete cross */}
                   {editModus && (
-                    <button
-                      onClick={() => handleDeleteContentItem(reference)}
-                      className="absolute top-2 right-2  bg-brandprimary text-white rounded-full p-1 hover:bg-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-500"
-                    >
-                      <XMarkIcon className="h-6 w-6" />
-                    </button>
+                    // make image a thumbnail
+                    <div className="flex flex-row ">
+                      <button
+                        onClick={() => handleThumbnailSet(reference)}
+                        className="absolute top-2 left-2 px-4 bg-brandprimary text-white rounded-full p-1 hover:bg-brandprimaryhover focus:bg-brandprimaryfocus"
+                      >
+                        Make Thumbnail
+                      </button>
+                      <button
+                        onClick={() => handleDeleteContentItem(reference)}
+                        className="absolute top-2 right-2  bg-brandprimary text-white rounded-full p-1 hover:bg-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-500"
+                      >
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
+                    </div>
                   )}
                   <Link to={`#${reference.id}`} className="w-full">
                     <img
@@ -328,6 +371,17 @@ const ReferenceDetail = () => {
                 )}
                 <p>Reference Description</p>
               </div>
+              {/* preview image */}
+              {editModus ? (
+                <div className="flex flex-col">
+                  <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
+                  <h2>Preview Image</h2>
+                  <img
+                    src={previewReference?.preview_image ?? "Error"}
+                    className="rounded-md border border-slate-50/10 w-full aspect-square object-cover"
+                  />
+                </div>
+              ) : null}
               <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
               <div>
                 <p>
@@ -366,9 +420,7 @@ const ReferenceDetail = () => {
                       Edit in Admin
                     </Link>
                   </div>
-                ) : (
-                  <div></div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
