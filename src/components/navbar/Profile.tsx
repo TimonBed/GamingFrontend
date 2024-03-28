@@ -23,7 +23,7 @@ export const Profile = () => {
       <div>
         <Menu as="div" className="relative ml-3">
           <div>
-            <Menu.Button className="relative flex rounded-full bg-brandgray-600 text-sm hover:outline-none hover:ring-1 hover:ring-white hover:ring-offset-2 hover:ring-offset-gray-800">
+            <Menu.Button className="relative flex rounded-full bg-brandgray-600 text-sm hover:outline-none hover:ring-1 hover:ring-white hover:ring-offset-2 hover:ring-offset-brandgray-800">
               {user?.username ? (
                 <div className="flex flex-row">
                   <Link
@@ -66,13 +66,13 @@ export const Profile = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 text-brandtext py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-brandgray-800 text-brandtext py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <Menu.Item>
                 {({ active }) => (
                   <Link
                     to="/profile/account"
                     className={classNames(
-                      active ? "bg-gray-700" : "",
+                      active ? "bg-brandgray-700" : "",
                       "block px-4 py-2 text-sm "
                     )}
                   >
@@ -81,7 +81,7 @@ export const Profile = () => {
                 )}
               </Menu.Item>
               {/* line between */}
-              <div className="border-t border-gray-50" />
+              <div className="border-t border-brandgray-50" />
               {/* show admin menu */}
               {user?.role === "admin" ? (
                 <Menu.Item>
@@ -89,7 +89,7 @@ export const Profile = () => {
                     <Link
                       to="/admin/users"
                       className={classNames(
-                        active ? "bg-gray-700" : "",
+                        active ? "bg-brandgray-700" : "",
                         "block px-4 py-2 text-sm "
                       )}
                     >
@@ -104,7 +104,7 @@ export const Profile = () => {
                   <a
                     href="#"
                     className={classNames(
-                      active ? "bg-gray-700" : "",
+                      active ? "bg-brandgray-700" : "",
                       "block px-4 py-2 text-sm"
                     )}
                     onClick={logoutUser}
