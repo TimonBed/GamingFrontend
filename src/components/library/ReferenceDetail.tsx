@@ -280,7 +280,7 @@ const ReferenceDetail = () => {
   };
 
   return (
-    <div className="pt-32 text-brandtext bg-brandgray-700 h-full ">
+    <div className="pt-32 text-brandtext bg-brandgray-700 ">
       {editModus ? (
         <EditBanner
           onSave={handleSaveReference}
@@ -315,7 +315,7 @@ const ReferenceDetail = () => {
       {/* content section */}
       <section className="max-w-[1760px] mx-auto mt-12  px-8 items-center">
         <div className="flex flex-row space-x-8 ">
-          <div className="flex flex-col w-full  max-h-[1000px] overflow-scroll pr-4">
+          <div className="flex flex-col w-full  pr-4">
             {editModus ? (
               <div>
                 {/* error message */}

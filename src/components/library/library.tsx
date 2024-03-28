@@ -34,8 +34,8 @@ const Library = () => {
   }, []);
 
   return (
-    <div className="bg-brandgray-700 text-brandtext h-full">
-      <div className="max-w-[2100px]  mb-8 mx-auto items-center">
+    <div className="bg-brandgray-700 text-brandtext ">
+      <div className="max-w-[2100px] mb-8 mx-auto items-center">
         <div className="pt-32 mx-8 max-w-[1500px] sm:mx-auto items-center flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight">
             Game Mechanics Reference Library
@@ -50,16 +50,18 @@ const Library = () => {
           <div className="flex flex-row mx-8 mt-16 space-x-8">
             <div className="p-8 rounded shadow-lg shadow-black/20 bg-brandgray-750 h-min">
               {/* add new reference */}
-              <button onClick={() => navigate("/reference/new")
-              } className="bg-brandprimary text-white p-3 w-full mb-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive">
+              <button
+                onClick={() => navigate("/reference/new")}
+                className="bg-brandprimary text-white p-3 w-full mb-8 rounded hover:bg-brandprimaryhover active:bg-brandprimaryactive"
+              >
                 Upload New Reference
               </button>
               {/* filter */}
               <h3>Filter</h3>
               <Filter />
             </div>
-            <div>
-              <div className="flex flex-wrap h-min gap-6 justify-center items-top">
+            <div className="">
+              <div className="flex flex-wrap gap-6">
                 {References.map((reference) => (
                   <ContentCard
                     key={reference.id}
