@@ -1,17 +1,11 @@
-import { UsersIcon, BookOpenIcon } from "@heroicons/react/24/outline";
+import { UsersIcon } from "@heroicons/react/24/outline";
 import { Profile } from "../navbar/Profile";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
 
 const navigation = [
-  { name: "Users", href: "/admin/users", icon: UsersIcon, current: true },
-  {
-    name: "References",
-    href: "/admin/references",
-    icon: BookOpenIcon,
-    current: false,
-  },
+  { name: "Account", href: "/profile/account", icon: UsersIcon, current: true },
 ];
 const teams = [
   { id: 1, name: "Home", href: "/", initial: "H", current: false },
@@ -22,7 +16,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function AdminDashboard() {
+export default function UserProfile() {
   const [navItems, setNavItems] = useState(navigation);
   const handleCurrent = (name: string) => {
     console.log(name);

@@ -22,6 +22,8 @@ import ReferencesPage from "./components/admin/References/ReferencesPage";
 import AdminReferences from "./components/admin/References/AdminReferences";
 import EmailVerification from "./components/login/EmailVerification";
 import VerificationRequested from "./components/login/VerificationRequested";
+import UserProfile from "./components/user/UserProfile";
+import UserAccount from "./components/user/UserAccount";
 
 function App() {
   return (
@@ -71,6 +73,18 @@ function App() {
                 path="/admin/references/:id"
                 element={<AdminReferences />}
               />
+            </Route>
+            <Route
+              path="/"
+              element={
+                <div className="flex flex-row">
+                  <UserProfile />
+                  <Outlet />
+                </div>
+              }
+            >
+              {/* user profile route */}
+              <Route path="/profile/account" element={<UserAccount />} />
             </Route>
           </Routes>
         </div>

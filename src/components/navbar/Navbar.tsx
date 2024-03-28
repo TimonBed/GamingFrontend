@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useUser } from "../../UserContext";
-import Profile from "./Profile";
+import { Profile } from "./Profile";
 import axios from "axios";
 
 const navigation = [
@@ -117,7 +117,7 @@ export const Navbar = () => {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Profile></Profile>
+          <Profile />
         </div>
       </nav>
       <Dialog
