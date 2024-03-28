@@ -1,4 +1,4 @@
-import { ArrowLongLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import MaxImage from "./MaxImage";
 import { useEffect, useState } from "react";
@@ -7,6 +7,9 @@ import PopupDialog from "../PopupDialog";
 import { NewReferenceItemDialog } from "./NewReferenceItemDialog";
 import { useUser } from "../../UserContext";
 import { GameInput } from "./GameInput";
+import Breadcrumb from "../Breadcrumb";
+import EditBanner from "../EditBanner";
+import ReferenceImage from "../ReferenceImage";
 
 interface Image {
   id: number;
@@ -82,7 +85,7 @@ const ReferenceDetail = () => {
         setGame(res.data);
       });
     });
-  }
+  };
 
   const handleNewImages = (dialogimages: FileList) => {
     setPopupDialogOpen(false);
@@ -180,34 +183,35 @@ const ReferenceDetail = () => {
   const handleSaveReference = async () => {
     if (previewReference && validateReference(previewReference)) {
       if (id === "new") {
-        await axios.post(`/references/references/`, previewReference)
+        await axios
+          .post(`/references/references/`, previewReference)
           .then(async (res) => {
             if (res.status === 201) {
               setPreviewReference(res.data);
               setReference(res.data);
               setEditModus(false);
-  
+
               // Upload images
               await uploadImages(newImages, res.data);
-  
+
               setNewImages([]);
               console.log("navigate", res.data);
               navigate(`/reference/${res.data.id}`);
             }
           });
       } else {
-        axios.put(`/references/references/${reference?.id}/`, previewReference)
+        axios
+          .put(`/references/references/${reference?.id}/`, previewReference)
           .then(async (res) => {
             if (res.status === 200) {
               // Upload images
               await uploadImages(newImages, res.data);
-  
+
               setPreviewReference(res.data);
               setReference(res.data);
               setEditModus(false);
               setNewImages([]);
               fetchReference();
-              
             }
           })
           .catch((err) => {
@@ -216,7 +220,6 @@ const ReferenceDetail = () => {
       }
     }
   };
-  
 
   const handleDeleteContentItem = (image: Image) => {
     console.log(reference);
@@ -290,33 +293,17 @@ const ReferenceDetail = () => {
   return (
     <div className="pt-32 text-brandtext bg-brandgray-700 h-full ">
       {editModus ? (
-        <div className=" absolute inset-0 mt-16 bg-brandprimary/40 h-min text-center font-bold text-lg justify-center">
-          Edit Modus
-          <button
-            onClick={handleCancelReference}
-            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSaveReference}
-            className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
-          >
-            Save
-          </button>
-        </div>
+        <EditBanner
+          onSave={handleSaveReference}
+          onCancel={handleCancelReference}
+        />
       ) : null}
       {/* maximized window popup */}
       {isMaximized ? (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-70">
-          <MaxImage
-            content={MaximizedContent}
-            onClose={onImageClose}
-          ></MaxImage>
+          <MaxImage content={MaximizedContent} onClose={onImageClose} />
         </div>
-      ) : (
-        <div></div>
-      )}
+      ) : null}
       <hr className="my-4 border-slate-50/20 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25" />
       {/* nav section */}
       <section className=" max-w-[1760px] px-8 mx-auto">
@@ -331,86 +318,7 @@ const ReferenceDetail = () => {
               <p>Back</p>
             </Link>
             {/* breadcrumb */}
-            <nav className="flex text-brandtext" aria-label="Breadcrumb">
-              <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <li className="inline-flex items-center">
-                  <Link
-                    to="/"
-                    className="inline-flex items-center text-sm font-medium hover:text-brandprimaryhover"
-                  >
-                    <svg
-                      className="w-3 h-3 me-2.5"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                    </svg>
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <div className="flex items-center">
-                    <svg
-                      className="rtl:rotate-180 w-3 h-3 mx-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                    <Link
-                      to="../library"
-                      className="ms-1 text-sm font-medium  hover:text-brandprimaryhover md:ms-2"
-                    >
-                      Library
-                    </Link>
-                  </div>
-                </li>
-                <li aria-current="page">
-                  <div className="flex items-center">
-                    <svg
-                      className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                    <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 ">
-                      {reference?.name}
-                    </span>
-                  </div>
-                </li>
-              </ol>
-            </nav>
-          </div>
-
-          {/* next prev buttons */}
-          <div className="inline-flex space-x-1">
-            {/* <Link to="/" className="flex disabled flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-l">
-              <ArrowLongLeftIcon className="h-6 w-6" />
-              <p>Last</p>
-            </Link>
-            <Link to="/" className=" flex disabled flex-row space-x-2 bg-brandprimary hover:bg-brandprimaryhover active:bg-brandprimaryactive text-brandtext font-bold py-1 px-4 rounded-r">
-              <p>Next</p>
-              <ArrowLongRightIcon className="h-6 w-6" />
-            </Link> */}
+            <Breadcrumb lastName={reference?.name}></Breadcrumb>
           </div>
         </div>
       </section>
@@ -474,36 +382,14 @@ const ReferenceDetail = () => {
                 //     />
                 //   </Link>
                 // )
-                <div className="w-full min-w-[265px] max-w-[512px] flex-1 relative overflow-clip hover:scale-[101%] duration-100 cursor-pointer transition-transform ease-in-out  shadow-lg h-min object-cover">
-                  {/* delete cross */}
-                  {editModus && (
-                    // make image a thumbnail
-                    <div className="flex flex-row ">
-                      <button
-                        onClick={() => handleThumbnailSet(reference)}
-                        className="absolute top-2 left-2 px-4 bg-brandprimary text-white rounded p-1 hover:bg-brandprimaryhover focus:bg-brandprimaryfocus"
-                      >
-                        Make Thumbnail
-                      </button>
-                      <button
-                        onClick={() => handleDeleteContentItem(reference)}
-                        className="absolute top-2 right-2  bg-brandprimary text-white rounded-full p-1 hover:bg-red-600/50 focus:outline-none focus:ring-2 focus:ring-red-500"
-                      >
-                        <XMarkIcon className="h-6 w-6" />
-                      </button>
-                    </div>
-                  )}
-                  <Link to={`#${reference.id}`} className="w-full">
-                    <img
-                      key={index}
-                      src={reference.image_file}
-                      className="rounded border w-full border-slate-50/10 "
-                      onClick={() => {
-                        handleMaximize(reference);
-                      }}
-                    />
-                  </Link>
-                </div>
+                <ReferenceImage
+                  reference={reference}
+                  onDeleteItem={handleDeleteContentItem}
+                  onMaximize={handleMaximize}
+                  onThumbnailSet={handleThumbnailSet}
+                  editModus={editModus}
+                  id={index}
+                />
               ))}
             </div>
           </div>
