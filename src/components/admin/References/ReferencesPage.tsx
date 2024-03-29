@@ -19,7 +19,7 @@ const ReferencesPage = () => {
   }, []);
 
   return (
-    <div className="p-16 bg-slate-800 w-full text-brandtext">
+    <div className="p-16 bg-brandgray-800 w-full text-brandtext">
       <div className="flex flex-row space-x-16">
         <h1 className=" my-auto text-left">References</h1>
         <button className=" my-auto h-full bg-brandprimary text-white p-3 rounded-md hover:bg-brandprimaryhover  active:bg-brandprimaryactive">
@@ -37,7 +37,7 @@ const ReferencesPage = () => {
         <tbody>
           {categories.map((category) => (
             <tr
-              className="border-b-2 border-gray-600 transition-colors"
+              className="border-b-2 border-brandgray-600 transition-colors"
               key={category.id}
             >
               <td className="px-6 py-2">{category.id}</td>

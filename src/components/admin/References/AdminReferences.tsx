@@ -35,8 +35,7 @@ const AdminReferences = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.put(`/references/references/${id}/`, reference).then(() => {
-    });
+    axios.put(`/references/references/${id}/`, reference).then(() => {});
     handleCancel();
   };
 
@@ -52,7 +51,7 @@ const AdminReferences = () => {
   };
 
   return (
-    <div className="p-16 bg-slate-800 w-full text-brandtext">
+    <div className="p-16 bg-brandgray-800 w-full text-brandtext">
       <div className="flex flex-row space-x-16">
         <h1 className="my-auto text-left">Reference {reference?.name}</h1>
       </div>
@@ -62,7 +61,7 @@ const AdminReferences = () => {
           <div>
             <label htmlFor="name">Name:</label>
             <input
-              className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
               type="text"
               id="name"
               value={reference?.name}
@@ -75,7 +74,7 @@ const AdminReferences = () => {
           <div>
             <label htmlFor="game">Game:</label>
             <select
-              className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
               id="game"
               required
             >
@@ -96,11 +95,16 @@ const AdminReferences = () => {
             <button className="bg-red-500 text-white p-2 px-8 rounded-md hover:bg-red-600 active:bg-red-700">
               Delete
             </button>
-            <button className="bg-yellow-500 text-white p-2 px-8 rounded-md hover:bg-yellow-600 active:bg-yellow-700"
-             onClick={handleCancel}>
+            <button
+              className="bg-yellow-500 text-white p-2 px-8 rounded-md hover:bg-yellow-600 active:bg-yellow-700"
+              onClick={handleCancel}
+            >
               Cancel
             </button>
-            <button onClick={() => navigate(`/reference/${reference?.id}`)} className="bg-blue-500 text-white p-2 px-8 rounded-md hover:bg-blue-600 active:bg-blue-700">
+            <button
+              onClick={() => navigate(`/reference/${reference?.id}`)}
+              className="bg-blue-500 text-white p-2 px-8 rounded-md hover:bg-blue-600 active:bg-blue-700"
+            >
               User View
             </button>
           </div>
