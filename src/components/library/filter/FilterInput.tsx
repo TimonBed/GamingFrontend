@@ -125,8 +125,8 @@ export const FilterInput = ({ apiEndpoint, name }: FilterInputProps) => {
             <div
               key={item.id}
               className={`${
-                current === index ? "bg-slate-300/20" : ""
-              } cursor-pointer flex flex-row justify-left pl-5 w-full h-10 items-center rounded active:bg-slate-300/30 `}
+                current === index ? "bg-brandgray-300/20" : ""
+              } cursor-pointer flex flex-row justify-left pl-5 w-full h-10 items-center rounded active:bg-brandgray-300/30 `}
               onMouseDown={() => handleDropdownItemClick(index)}
               onMouseOver={() => setCurrent(index)}
               onKeyDown={handleDropDownNavigation}
@@ -146,7 +146,7 @@ export const FilterInput = ({ apiEndpoint, name }: FilterInputProps) => {
               setSelected((prev) => prev.filter((i) => i.id !== item.id))
             }
           >
-            <div className="flex flex-row bg-slate-600 rounded items-center py-1 px-2 space-x-1">
+            <div className="flex flex-row bg-brandgray-600 rounded items-center py-1 px-2 space-x-1">
               <XMarkIcon className="h-4 w-4" />
               <p>{item.name}</p>
             </div>
