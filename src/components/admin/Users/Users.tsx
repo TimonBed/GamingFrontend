@@ -70,7 +70,7 @@ const Users = () => {
     });
   };
   return (
-    <div className="p-16 bg-slate-800 w-full text-brandtext">
+    <div className="p-16 bg-brandgray-800 w-full text-brandtext">
       <h1 className="text-left">Users</h1>
       <CreateUserForm onUserCreated={reloadUsers} />
       <table>

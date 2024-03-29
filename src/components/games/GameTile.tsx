@@ -14,7 +14,7 @@ const GameCoverTile: React.FC<GameCoverTileProps> = ({ game }) => {
   const { name, game_category, image } = game;
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+    <div className="bg-brandgray-800 p-4 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
       <div className="relative aspect-w-16 aspect-h-9 mb-4">
         <img
           src={image}

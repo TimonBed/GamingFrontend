@@ -19,7 +19,7 @@ export const GameMain = () => {
     });
   }, []);
   return (
-    <div className="bg-gray-900 text-brandtext">
+    <div className="bg-brandgray-900 text-brandtext">
       <div className="mt-32 mx-8 max-w-[1500px] sm:mx-auto items-center flex flex-col">
         <h1>References Of Games</h1>
 

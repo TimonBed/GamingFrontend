@@ -33,7 +33,7 @@ const VerificationRequested = () => {
   };
 
   return (
-    <div className="h-screen bg-slate-800 items-center flex">
+    <div className="h-screen bg-brandgray-800 items-center flex">
       <div className="flex flex-1 flex-col text-brandtext lg:px-8  justify-center">
         <div className="items-center flex justify-center flex-col">
           <Link to="/" className="mb-6 flex flex-row items-center space-x-4">
@@ -62,7 +62,7 @@ const VerificationRequested = () => {
                     <span>Resending</span>
                     <svg
                       aria-hidden="true"
-                      className="w-5 h-5 my-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      className="w-5 h-5 my-auto text-brandgray-200 animate-spin dark:text-brandgray-600 fill-blue-600"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"

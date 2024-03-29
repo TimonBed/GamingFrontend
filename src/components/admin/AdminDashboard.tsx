@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className=" min-w-72 flex flex-col h-screen gap-y-5  overflow-y-auto bg-gray-900 px-6">
+    <div className=" min-w-72 flex flex-col h-screen gap-y-5  overflow-y-auto bg-brandgray-900 px-6">
       <div className="flex h-16 shrink-0 items-center ">
         <Link to={"/"}>
           <img className="h-8 w-auto" src={logo} alt="Your Company" />
@@ -53,8 +53,8 @@ export default function AdminDashboard() {
                     onClick={() => handleCurrent(item.name)}
                     className={classNames(
                       item.current
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800",
+                        ? "bg-brandgray-800 text-white"
+                        : "text-gray-400 hover:text-white hover:bg-brandgray-800",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )}
                   >
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
                     {item.name}
                     {/* {item.count ? (
                       <span
-                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-gray-900 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-gray-700"
+                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-brandgray-900 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-gray-700"
                         aria-hidden="true"
                       >
                         {item.count}
@@ -88,12 +88,12 @@ export default function AdminDashboard() {
                     to={team.href}
                     className={classNames(
                       team.current
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800",
+                        ? "bg-brandgray-800 text-white"
+                        : "text-gray-400 hover:text-white hover:bg-brandgray-800",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )}
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-brandgray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>

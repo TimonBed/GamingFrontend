@@ -47,7 +47,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onUserCreated }) => {
       <div>
         <label htmlFor="username">Username:</label>
         <input
-          className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
           type="text"
           id="username"
           value={username}
@@ -58,7 +58,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onUserCreated }) => {
       <div>
         <label htmlFor="email">Email:</label>
         <input
-          className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
           type="email"
           id="email"
           value={email}
@@ -69,7 +69,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onUserCreated }) => {
       <div>
         <label htmlFor="password">Password:</label>
         <input
-          className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
           type="password"
           id="password"
           value={password}
@@ -80,7 +80,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onUserCreated }) => {
       <div>
         <label htmlFor="role">Role:</label>
         <select
-          className="mt-2 block w-full rounded-md border-0 bg-gray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="mt-2 block w-full rounded-md border-0 bg-brandgray-700 py-1.5 text-brandtext shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value)}

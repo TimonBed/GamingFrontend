@@ -124,8 +124,8 @@ export const GameInput = ({ oldSelected, onChange }: FilterInputProps) => {
               <div
                 key={item.id}
                 className={`${
-                  current === index ? "bg-slate-300/20" : ""
-                } cursor-pointer flex flex-row justify-left pl-5 w-full h-10 items-center rounded active:bg-slate-300/30 `}
+                  current === index ? "bg-brandgray-300/20" : ""
+                } cursor-pointer flex flex-row justify-left pl-5 w-full h-10 items-center rounded active:bg-brandgray-300/30 `}
                 onMouseDown={() => handleDropdownItemClick(index)}
                 onMouseOver={() => setCurrent(index)}
                 onKeyDown={handleDropDownNavigation}

@@ -9,14 +9,12 @@ import {
 
 import React, { useEffect, useRef } from "react";
 
-
 interface Image {
   id: number;
   title: string;
   image_file: string;
   reference: number;
 }
-
 
 interface imageProps {
   onClose: () => void;
@@ -63,7 +61,7 @@ const MaxImage = ({ onClose, content }: imageProps) => {
           ></img>
           {/* Close button in the top-right corner */}
           <button
-            className="absolute top-4 right-4 p-2 bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500 rounded-full"
+            className="absolute top-4 right-4 p-2 bg-brandgray-500/50 hover:bg-brandgray-500/70 active:bg-brandgray-500 rounded-full"
             onClick={() => {
               onClose();
             }}
@@ -85,22 +83,22 @@ const MaxImage = ({ onClose, content }: imageProps) => {
                 document.body.removeChild(downloadLink);
               }
             }
-            className="flex flex-row p-4 m-4 justify-center items-center bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500 rounded-full"
+            className="flex flex-row p-4 m-4 justify-center items-center bg-brandgray-500/50 hover:bg-brandgray-500/70 active:bg-brandgray-500 rounded-full"
           >
             <ArrowDownTrayIcon className="h-6 w-6 text-brandtext" />
           </button>
-          <button className="flex flex-row p-4 m-4 justify-center items-center bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500 rounded-full">
+          <button className="flex flex-row p-4 m-4 justify-center items-center bg-brandgray-500/50 hover:bg-brandgray-500/70 active:bg-brandgray-500 rounded-full">
             <LinkIcon className="h-6 w-6 text-brandtext" />
           </button>
-          <button className="flex flex-col p-4 m-4 justify-center items-center bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500 rounded-full space-y-2">
+          <button className="flex flex-col p-4 m-4 justify-center items-center bg-brandgray-500/50 hover:bg-brandgray-500/70 active:bg-brandgray-500 rounded-full space-y-2">
             <HandThumbUpIcon className="h-6 w-6 text-brandtext" />
             <p className="text-sm">288</p>
           </button>
-          <button className="flex flex-col p-4 m-4 justify-center items-center bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500 rounded-full space-y-2">
+          <button className="flex flex-col p-4 m-4 justify-center items-center bg-brandgray-500/50 hover:bg-brandgray-500/70 active:bg-brandgray-500 rounded-full space-y-2">
             <HandThumbDownIcon className="h-6 w-6 text-brandtext" />
             <p className="text-sm">288</p>
           </button>
-          <button className="flex flex-col p-4 m-4 justify-center items-center bg-gray-500/50 rounded-full space-y-2">
+          <button className="flex flex-col p-4 m-4 justify-center items-center bg-brandgray-500/50 rounded-full space-y-2">
             <EyeIcon className="h-6 w-6 text-brandtext" />
             <p className="text-sm">288</p>
           </button>

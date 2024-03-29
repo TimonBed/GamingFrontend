@@ -9,13 +9,13 @@ const EditBanner = ({ onCancel, onSave }: EditBannerProps) => {
       Edit Modus
       <button
         onClick={onCancel}
-        className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
+        className="bg-brandgray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
       >
         Cancel
       </button>
       <button
         onClick={onSave}
-        className="bg-gray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
+        className="bg-brandgray-700 shadow shadow-brandgray-750 text-white m-2 p-1 px-8 rounded hover:bg-brandgray-700 active:bg-brandgray-900"
       >
         Save
       </button>
