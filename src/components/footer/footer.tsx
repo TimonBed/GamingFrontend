@@ -4,6 +4,7 @@ const navigation = {
   main: [
     { name: "Impress", href: "impress" },
     { name: "Privacy", href: "privacy" },
+    { name: "Cookies", href: "javascript:UC_UI.showSecondLayer();" },
   ],
   social: [
     {
